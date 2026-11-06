@@ -194,23 +194,6 @@ th{color:var(--muted);font-weight:500}
 #skipBtn{margin-left:auto}
 #fsBtn{display:none!important}
 }
-/* スマホ横画面: 高さに収まる16:9で表示 */
-@media (orientation:landscape) and (max-height:34rem){
-body{padding-block:.3rem}
-.stage{padding:0;border:0;min-height:0;background:none}
-.screen,.title{aspect-ratio:16/9;width:min(100%,calc((100svh - .8rem)*16/9));max-height:calc(100svh - .8rem);margin-inline:auto}
-.title{padding:0;gap:.3rem;justify-content:flex-start}
-.title .cover{height:auto;max-height:70%;object-fit:cover}
-.title .note{display:none}
-.title .foot{flex:none;flex-direction:row;gap:1rem;padding:.2rem 1rem 0;align-items:center;justify-content:center}
-.title .endlist{flex-direction:row;gap:.5rem}
-.title .start{padding:.35rem 1.6rem;font-size:.85rem}
-.win{padding:.7rem 1rem .6rem;min-height:5.2rem}
-.win .tx{font-size:.88rem;line-height:1.7}
-.screen .choices{padding-inline:3%;gap:.35rem}
-.screen .choices .opt,.screen .choices button{padding:.4rem .8rem;font-size:.82rem}
-.spr.cat{bottom:5.2rem}
-}
 .fade{position:absolute;inset:0;z-index:9;background:#040a16;opacity:0;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:#cdd6de;font-family:var(--font-text);transition:opacity 1.6s ease}
 .fade.on{opacity:1;pointer-events:auto}
 .fade .fd1,.fade .fd2{opacity:0;transition:opacity .9s ease}
@@ -242,6 +225,34 @@ body{padding-block:.3rem}
 .logv .x{position:fixed;position:absolute;right:.8rem;top:.6rem;z-index:9}
 .screen .end{position:absolute;inset:0;z-index:7;background:color-mix(in srgb,var(--paper) 93%,transparent);padding:1.6rem 1.8rem;overflow:auto;cursor:default}
 @media (max-width:30rem){.win{padding:1.3rem 1.1rem 1.1rem;min-height:8.4rem}.win .tx{font-size:1rem}.spr.cat{bottom:8.4rem}.screen .choices{padding-inline:5%}}
+/* スマホ横画面: 高さに収まる16:9で表示 */
+@media (orientation:landscape) and (max-height:34rem){
+body{padding-block:.3rem}
+.stage{padding:0;border:0;min-height:0;background:none}
+.screen,.title{aspect-ratio:16/9;width:min(100%,calc((100svh - .8rem)*16/9));max-height:calc(100svh - .8rem);margin-inline:auto}
+.title{padding:0;gap:.3rem;justify-content:flex-start}
+.title .cover{height:auto;max-height:56%;object-fit:contain}
+.title .note{display:none}
+.title .foot{flex:none;flex-direction:row;gap:.3rem .8rem;padding:.2rem 1rem 0;align-items:center;justify-content:center;flex-wrap:wrap}
+.title .endlist{flex-direction:row;gap:.5rem}
+.title .start{padding:.35rem 1.6rem;font-size:.85rem}
+.lhint{display:block!important}
+.screen .hd{left:.45rem;right:.45rem;top:.4rem;flex-wrap:nowrap;justify-content:flex-start;gap:.3rem}
+.screen .hd::after{display:none}
+.hdr{display:contents}
+#hdLeft{order:1}
+#hdRight{order:2;margin-right:auto;background:color-mix(in srgb,var(--paper) 88%,transparent);border:1px solid var(--line);border-radius:99px;padding:.05rem .5rem;font-size:.65rem;color:var(--muted)}
+.screen .hd>span,.screen .logbtn{font-size:.65rem;padding:.04rem .5rem;letter-spacing:.04em}
+.screen .logbtn{order:3;background:color-mix(in srgb,var(--paper) 90%,transparent)}
+#skipBtn{margin-left:0}
+#fsBtn{border-color:var(--accent);color:var(--accent)}
+.win{left:.5rem;right:.5rem;bottom:.45rem;padding:.55rem .9rem .45rem;min-height:3.9rem}
+.win .nm{top:-.75rem;left:.7rem;font-size:.68rem;padding:.06rem .6rem}
+.win .tx{font-size:.8rem;line-height:1.6;padding-right:.8rem}
+.spr.cat{bottom:4.4rem}
+.screen .choices{padding-inline:3%;gap:.3rem}
+.screen .choices .opt,.screen .choices button{padding:.3rem .8rem;font-size:.78rem}
+}
 </style>
 
 <div class="app">
@@ -249,7 +260,7 @@ body{padding-block:.3rem}
     <div id="titleView" class="title">
       <h1 class="vh">旅人と黒猫　幸福の国</h1>
       <img class="cover" id="coverImg" alt="旅人と黒猫　幸福の国" src="img/title.webp">
-      <div class="foot"><button class="start" id="startBtn" type="button">はじめる</button>
+      <div class="foot"><button class="start" id="startBtn" type="button">はじめる</button><p class="lhint" style="display:none;margin:0;font-size:.7rem;color:#b9b49f;flex-basis:100%;text-align:center">横画面は、ゲーム中の「全画面」ボタンがおすすめです</p>
       <div class="endlist"><p class="endlist-h">エンディング　全5種</p><div class="slots" id="titleSlots"></div></div></div>
     </div>
     <div id="gameView" hidden>
