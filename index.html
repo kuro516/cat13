@@ -1,0 +1,1293 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="「幸福の国」を訪れた旅人と黒猫の、三日間の物語。ビジュアルノベル。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="旅人と黒猫 幸福の国">
+<meta property="og:title" content="旅人と黒猫 幸福の国">
+<meta property="og:description" content="「幸福の国」を訪れた旅人と黒猫の、三日間の物語。ビジュアルノベル。">
+<meta property="og:url" content="https://kuro516.github.io/cat13/">
+<meta property="og:image" content="https://kuro516.github.io/cat13/img/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="旅人と黒猫 幸福の国">
+<meta name="twitter:description" content="「幸福の国」を訪れた旅人と黒猫の、三日間の物語。ビジュアルノベル。">
+<meta name="twitter:image" content="https://kuro516.github.io/cat13/img/ogp.jpg">
+<link rel="icon" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/icon.png">
+<title>旅人と黒猫 幸福の国</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* 凪いだ海のように平らな画面。本文は明朝、操作と調整は角ゴシック。強調は題字の字間だけに絞る */
+:root{
+  --bg:#e8eef0; --paper:#f7fafa; --ink:#1c2a2f; --muted:#56676e; --line:#c7d4d8;
+  --accent:#2a6c77; --accent-soft:#d9eaed; --pos:#2a7655; --neg:#b04a36;
+  --font-text:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --font-ui:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11181b; --paper:#182226; --ink:#e2ecee; --muted:#93a7ae; --line:#2a3a40;
+    --accent:#86c5cf; --accent-soft:#1f3338; --pos:#6fcf9f; --neg:#e58a76; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11181b; --paper:#182226; --ink:#e2ecee; --muted:#93a7ae; --line:#2a3a40;
+  --accent:#86c5cf; --accent-soft:#1f3338; --pos:#6fcf9f; --neg:#e58a76; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:1.25rem 2rem}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 19.5rem;gap:1.25rem;max-width:62rem;margin:0 auto;align-items:start}
+@media (max-width:52rem){.app{grid-template-columns:minmax(0,1fr)}}
+button{font-family:var(--font-ui);color:var(--ink)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.stage{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1.1rem 1.5rem 1.5rem;min-height:28rem;display:flex;flex-direction:column;min-width:0}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.8125rem;color:var(--muted);letter-spacing:.05em;border-bottom:1px solid var(--line);padding-bottom:.7rem;margin-bottom:1.25rem}
+.ticks{display:inline-flex;gap:.3rem;margin-right:.6rem;vertical-align:middle}
+.tick{width:.55rem;height:.55rem;border-radius:50%;border:1px solid var(--muted)}
+.tick.on{background:var(--accent);border-color:var(--accent)}
+.lines{display:flex;flex-direction:column;gap:.85rem;flex:1;min-height:6rem}
+.ln{display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:.75rem;font-family:var(--font-text);font-size:1.0625rem;line-height:2;animation:rise .5s ease both}
+.ln .sp{font-family:var(--font-ui);font-size:.75rem;letter-spacing:.08em;color:var(--muted);padding-top:.6rem;text-align:right}
+.ln .sp.tra{color:var(--accent)} .ln .sp.cat{color:var(--ink);font-weight:700}
+.ln .tx{overflow-wrap:anywhere}
+body.debug .ln.draft .tx{border-bottom:1px dotted var(--muted)}
+@keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ln{animation:none}}
+@media (max-width:30rem){.ln{grid-template-columns:3rem minmax(0,1fr);gap:.5rem}.stage{padding-inline:1rem}}
+
+.more{display:flex;justify-content:flex-end;gap:1rem;margin-top:1rem}
+.link{background:none;border:0;padding:.3rem .2rem;font-size:.8125rem;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.link.go{color:var(--accent);text-decoration:none;font-weight:500}
+.choices{margin-top:1.25rem;display:grid;gap:.5rem}
+.prompt{font-size:.8125rem;color:var(--muted);letter-spacing:.04em}
+.opt{text-align:left;font-size:.9375rem;padding:.7rem .9rem;border:1px solid var(--line);background:transparent;border-radius:4px;display:flex;justify-content:space-between;gap:1rem;cursor:pointer;line-height:1.5}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.chosen{background:var(--accent-soft);border-color:var(--accent)}
+.opt:disabled:not(.chosen){opacity:.45;cursor:default}
+.tag{display:none;font-size:.75rem;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+body.debug .tag{display:inline}
+.tag.pos{color:var(--pos)} .tag.neg{color:var(--neg)}
+
+.title{text-align:left;padding:2.5rem 0 1rem;display:flex;flex-direction:column;gap:1.25rem;flex:1;justify-content:center}
+.title h1{font-family:var(--font-text);font-weight:700;font-size:clamp(2.6rem,9vw,4.2rem);letter-spacing:.35em;margin:0;line-height:1.2;text-wrap:balance}
+.title .sub{font-family:var(--font-text);color:var(--muted);letter-spacing:.12em;margin:0}
+.title .note{max-width:34rem;color:var(--muted);font-size:.875rem;margin:0}
+.start{align-self:flex-start;font-size:1rem;padding:.7rem 1.6rem;background:var(--accent);color:var(--paper);border:0;border-radius:4px;cursor:pointer;letter-spacing:.1em}
+:root .start{color:var(--bg)}
+.horizon{height:1px;background:var(--line);max-width:34rem}
+
+.end h2{font-family:var(--font-text);font-size:1.6rem;margin:.2rem 0 .3rem;letter-spacing:.12em}
+.end .cond{display:none;color:var(--muted);font-size:.875rem;margin:0 0 1rem}
+.slots{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0 1.1rem}
+.slot{font-size:.8125rem;border:1px solid var(--line);padding:.25rem .6rem;border-radius:3px;color:var(--muted)}
+
+/* タイトル画面：濃紺と金 */
+.title{background:#06172c;color:#e9dcc0;border-radius:6px;padding:0 0 1.6rem;gap:1rem;justify-content:flex-start;align-items:center;text-align:center;overflow:hidden}
+.title .cover{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;-webkit-mask-image:linear-gradient(#000 90%,transparent);mask-image:linear-gradient(#000 90%,transparent)}
+.title .note{color:#b9b49f;margin:.4rem 1.2rem 0}
+.title .endlist-h{color:#c9b27a}
+.title .slots{justify-content:center}
+.title .slot{border-color:#5a4d2c;color:#9c9578;background:transparent}
+.title .slot.got{border-color:#d4af6a;color:#f0d9a0;background:#1b2440}
+.title .start{align-self:center;background:#d4af6a;color:#031429;font-weight:700;letter-spacing:.3em;padding:.75rem 2.6rem}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0}
+
+/* タイトル画面：16:9の一枚に収める（狭い画面では3:4） */
+.title{aspect-ratio:16/9;padding:0;gap:0;flex:none;justify-content:flex-start;align-items:stretch;min-height:0}
+.title .cover{aspect-ratio:auto;height:auto;-webkit-mask-image:none;mask-image:none}
+.title .foot{flex:1;display:flex;align-items:center;justify-content:center;gap:1.6rem;flex-wrap:wrap;padding:.4rem 1rem;min-height:0}
+.title .endlist{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.title .endlist .slots{margin:0}
+.title .start{padding:.6rem 2.2rem}
+@media (max-width:52rem){
+  .title{aspect-ratio:3/4;max-height:calc(100svh - 2.5rem);justify-content:center}
+  .title .foot{flex:none;flex-direction:column;gap:1.1rem;padding:1.6rem 1rem 0}
+  .title .endlist{flex-direction:column;gap:.5rem}
+}
+.endlist-h{margin:0;font-size:.8125rem;color:var(--muted);letter-spacing:.1em}
+.endlist .slots{margin:.4rem 0 0}
+.slot.got{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.btns{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.btn{font-size:.9rem;padding:.55rem 1rem;border:1px solid var(--line);background:transparent;border-radius:4px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;font-size:.8125rem;width:100%;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:.3rem .5rem;text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:500}
+
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:.9rem 1rem;min-width:0}
+.panel summary{cursor:pointer;font-weight:700;font-size:.875rem;letter-spacing:.06em}
+.panel h3{font-size:.75rem;font-weight:500;color:var(--muted);letter-spacing:.08em;margin:1.1rem 0 .4rem}
+.row{display:flex;justify-content:space-between;align-items:center;gap:.6rem;font-size:.8125rem;margin:.3rem 0}
+.row input[type=number],.row input[type=text]{width:6.5rem;font:inherit;padding:.25rem .4rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:3px}
+.row input[type=text]{width:8rem}
+.big{font-size:1.9rem;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+.meter{position:relative;height:10px;background:var(--accent-soft);border-radius:5px;margin:.9rem 0 .35rem}
+.fill{position:absolute;top:0;bottom:0}
+.fill.pos{background:var(--pos);border-radius:0 5px 5px 0}.fill.neg{background:var(--neg);border-radius:5px 0 0 5px}
+.mk{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.mk.zero{background:var(--muted);opacity:.6}
+.mk.thr{background:var(--accent);width:3px}
+.scale{display:flex;justify-content:space-between;font-size:.6875rem;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem}
+.chip{font-size:.75rem;border:1px solid var(--line);border-radius:3px;padding:.1rem .45rem;color:var(--muted)}
+.chip.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.logline{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:.5rem;font-size:.75rem;border-bottom:1px solid var(--line);padding:.25rem 0;font-variant-numeric:tabular-nums}
+.logline .p.pos{color:var(--pos)}.logline .p.neg{color:var(--neg)}
+.empty{font-size:.75rem;color:var(--muted)}
+.hint{font-size:.75rem;color:var(--muted);margin:.5rem 0 0}
+
+/* 画像版: 背景と人物の舞台。画像が無い枠は、色と名前だけの仮表示 */
+:root{--phl:84%}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--phl:20%}}
+:root[data-theme="dark"]{--phl:20%}
+.scene{position:sticky;top:env(safe-area-inset-top,0px);z-index:3;position:sticky;aspect-ratio:16/9;max-height:50vh;width:100%;margin:0 0 1rem;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--accent-soft)}
+@media (max-width:52rem){.scene{aspect-ratio:4/3;max-height:42vh}}
+.scene .bg,.scene .cast{position:absolute;inset:0}
+.bg{opacity:0;transition:opacity .7s ease;background-size:cover;background-position:center bottom;background-repeat:no-repeat}
+.bg.on{opacity:1}
+.bg.ph{background-image:linear-gradient(180deg,hsl(var(--h) 24% calc(var(--phl) + 5%)),hsl(var(--h) 22% var(--phl)))}
+.bg.ph::after{content:attr(data-label);position:absolute;left:.8rem;top:.6rem;font-size:.75rem;letter-spacing:.08em;color:var(--muted)}
+.spr{position:absolute;bottom:0;opacity:.72;transition:right .45s ease,opacity .3s ease}
+.spr.active{opacity:1}
+.spr img{height:100%;width:auto;display:block}
+.spr.cat{left:2%;height:34%}
+.spr.npc{height:86%}
+.spr.npc.s0{right:3%}.spr.npc.s1{right:27%}.spr.npc.s2{right:51%}
+.spr.ph{display:flex;align-items:flex-end;justify-content:center;border:1px dashed var(--muted);border-bottom:0;border-radius:45% 45% 0 0;background:color-mix(in srgb,var(--paper) 62%,transparent);color:var(--muted);font-size:.75rem;letter-spacing:.06em;padding:.4rem .6rem}
+.spr.npc.ph{aspect-ratio:3/5}
+.spr.npc.k_child{height:62%}
+.spr.cat.ph{aspect-ratio:1}
+@media (prefers-reduced-motion:reduce){.bg,.spr{transition:none}}
+.assets summary{cursor:pointer;font-size:.8125rem}
+.arow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem;font-size:.75rem;border-bottom:1px solid var(--line);padding:.2rem 0}
+.arow .ok{color:var(--pos)} .arow .no{color:var(--muted)}
+.arow code{font-size:.6875rem;color:var(--muted)}
+
+/* ビジュアルノベル版: 一枚の画面に背景・人物・メッセージ窓を重ねる */
+.app{grid-template-columns:minmax(0,1fr)!important;max-width:60rem}
+.stage{background:none;border:0;padding:0;min-height:0}
+.screen{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--paper);user-select:none;-webkit-user-select:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media (max-width:52rem){.screen{aspect-ratio:3/4;max-height:calc(100svh - 2.5rem)}}
+.screen .scene{position:absolute;inset:0;aspect-ratio:auto;max-height:none;margin:0;border:0;border-radius:0}
+.screen .hd{position:absolute;left:.6rem;right:.6rem;top:.55rem;z-index:4;display:flex;justify-content:space-between;align-items:center;gap:.5rem;border:0;margin:0;padding:0;pointer-events:none}
+.screen .hd>span,.screen .logbtn{background:color-mix(in srgb,var(--paper) 82%,transparent);border:1px solid var(--line);border-radius:99px;padding:.12rem .7rem;font-size:.75rem;color:var(--muted);letter-spacing:.06em}
+.screen .hd>span:empty{display:none}
+.hdr{display:flex;gap:.4rem;align-items:center}
+.screen .logbtn{pointer-events:auto;cursor:pointer;font-family:var(--font-ui)}
+.screen .logbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fade{position:absolute;inset:0;z-index:9;background:#040a16;opacity:0;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:#cdd6de;font-family:var(--font-text);transition:opacity 1.6s ease}
+.fade.on{opacity:1;pointer-events:auto}
+.fade .fd1,.fade .fd2{opacity:0;transition:opacity .9s ease}
+.fade.lab .fd1,.fade.lab .fd2{opacity:1}
+.fade .fd1{font-size:1.1rem;letter-spacing:.4em;padding-left:.4em}
+.fade .fd2{font-size:.8rem;letter-spacing:.35em;padding-left:.35em;color:#8b98a5}
+#gameView:fullscreen,#gameView:-webkit-full-screen{background:#000;display:flex;align-items:center;justify-content:center}
+#gameView:fullscreen .screen{width:min(100vw,calc(100vh*16/9));aspect-ratio:16/9;max-height:100vh;border:0;border-radius:0}
+@media (orientation:portrait){#gameView:fullscreen .screen{width:100vw;height:100vh;aspect-ratio:auto;max-height:none}}
+.screen .logbtn.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.spr.cat{left:2%;bottom:7.4rem;height:32%}
+.spr.npc{height:94%}
+.spr img{max-width:62vw;object-fit:contain}
+.win{position:absolute;left:.7rem;right:.7rem;bottom:.7rem;z-index:5;min-height:7.6rem;padding:1.35rem 1.6rem 1.2rem;background:color-mix(in srgb,var(--paper) 90%,transparent);border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(2px)}
+.win .nm{position:absolute;left:1rem;top:-.95rem;padding:.14rem .95rem;background:var(--accent-soft);border:1px solid var(--line);border-radius:4px;font-size:.8125rem;letter-spacing:.14em;color:var(--ink)}
+.win .nm:empty{display:none}
+.win .nm.tra{color:var(--accent)} .win .nm.cat{font-weight:700}
+.win .tx{font-family:var(--font-text);font-size:1.0625rem;line-height:1.95;overflow-wrap:anywhere;padding-right:1rem}
+.ind{position:absolute;right:.9rem;bottom:.45rem;color:var(--accent);font-size:.8rem;animation:blink 1.1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.15}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ind{animation:none}}
+.screen .choices{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;justify-content:center;gap:.6rem;margin:0;padding:3rem 9% 10.5rem;background:color-mix(in srgb,var(--bg) 40%,transparent);overflow:auto;cursor:default}
+.screen .prompt{align-self:center;background:color-mix(in srgb,var(--paper) 88%,transparent);border:1px solid var(--line);border-radius:99px;padding:.15rem .9rem;color:var(--ink)}
+.screen .opt{background:color-mix(in srgb,var(--paper) 94%,transparent);font-family:var(--font-text);font-size:1rem;padding:.8rem 1.1rem}
+.screen .opt.chosen{background:var(--accent-soft)}
+.logv{position:absolute;inset:0;z-index:8;background:color-mix(in srgb,var(--paper) 97%,transparent);overflow:auto;padding:3.2rem 1.4rem 1.2rem;cursor:default}
+.logv .le{display:grid;grid-template-columns:4rem minmax(0,1fr);gap:.7rem;font-family:var(--font-text);font-size:.95rem;line-height:1.85;margin:0 0 .6rem}
+.logv .le .n{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);text-align:right;padding-top:.3rem}
+.logv .x{position:fixed;position:absolute;right:.8rem;top:.6rem;z-index:9}
+.screen .end{position:absolute;inset:0;z-index:7;background:color-mix(in srgb,var(--paper) 93%,transparent);padding:1.6rem 1.8rem;overflow:auto;cursor:default}
+@media (max-width:30rem){.win{padding:1.3rem 1.1rem 1.1rem;min-height:8.4rem}.win .tx{font-size:1rem}.spr.cat{bottom:8.4rem}.screen .choices{padding-inline:5%}}
+</style>
+
+<div class="app">
+  <main class="stage" id="stage" aria-live="polite">
+    <div id="titleView" class="title">
+      <h1 class="vh">旅人と黒猫　幸福の国</h1>
+      <img class="cover" id="coverImg" alt="旅人と黒猫　幸福の国" src="img/title.webp">
+      <div class="foot"><button class="start" id="startBtn" type="button">はじめる</button>
+      <div class="endlist"><p class="endlist-h">エンディング　全5種</p><div class="slots" id="titleSlots"></div></div></div>
+    </div>
+    <div id="gameView" hidden>
+      <div class="screen" id="screen">
+        <div class="scene" id="scene" aria-hidden="true"><div class="bg" id="bgA"></div><div class="bg" id="bgB"></div><div class="cast" id="cast"></div></div>
+        <div class="fade" id="fade" aria-hidden="true"><div class="fd1" id="fadeD"></div><div class="fd2" id="fadeT"></div></div>
+        <div class="hd"><span id="hdLeft"></span><span class="hdr"><span id="hdRight"></span><button class="logbtn" id="skipBtn" type="button">スキップ</button><button class="logbtn" id="fsBtn" type="button" hidden>全画面</button><button class="logbtn" id="muteBtn" type="button">音 ON</button><button class="logbtn" id="logBtn" type="button">ログ</button></span></div>
+        <div class="choices" id="choices" hidden></div>
+        <div class="win" id="msg" aria-live="polite"><div class="nm" id="msgName"></div><div class="tx" id="msgText"></div><span class="ind" id="ind" hidden>▼</span></div>
+        <div class="logv" id="logv" hidden><button class="btn x" id="logClose" type="button">閉じる</button><div id="logBody"></div></div>
+        <div id="endView" class="end" hidden></div>
+      </div>
+    </div>
+  </main>
+
+  <details class="panel" id="panel" hidden>
+    <summary>調整パネル（制作用）</summary>
+    <div class="row" style="margin-top:.8rem"><label for="dbg">調整表示（点数と判定）</label><input type="checkbox" id="dbg"></div>
+
+    <div class="row"><label for="forceTrue">トゥルー解放（検証用：4ED既読でなくても④番目の選択肢を出す）</label><input type="checkbox" id="forceTrue"></div>
+
+    <h3>言葉ゲージ</h3>
+    <div id="gaugeBox"></div>
+
+    <h3>状態</h3>
+    <div id="flagBox" class="chips"></div>
+
+    <h3>素材</h3>
+    <div id="assetBox"></div>
+
+    <h3>設定</h3>
+    <div class="row"><label for="vol">BGM音量</label><input type="range" id="vol" min="0" max="100" value="30"></div>
+    <div class="row"><label for="thr">しきい値（言葉を持てた）</label><input type="number" id="thr" value="10" min="-14" max="14"></div>
+    <div class="row"><label for="nm">少女の名前（仮：アルテ）</label><input type="text" id="nm" value="アルテ"></div>
+    <div class="row"><label for="gset">ゲージを直接設定</label><span><input type="number" id="gset" value="0" min="-14" max="14"> <button class="btn" id="gsetBtn" type="button" style="padding:.2rem .6rem">設定</button></span></div>
+
+    <h3>選択の記録</h3>
+    <div id="logBox"></div>
+    <p class="hint">満点は+14、最低は−14。小の会話は7回（路地裏1、学校2、行き先2×2）、中は2回（少女の家、ベンチ）、大は1回（前夜）です。選択肢の並びは毎回入れ替わります。</p>
+  </details>
+</div>
+
+<script>
+(function(){
+'use strict';
+var MIN=-14, MAX=14;
+var cfg={threshold:10,name:'アルテ'};
+var S=null, Q=null, pendingNext=null;
+var $=function(id){return document.getElementById(id)};
+
+var PLACES={
+  park:{label:'公園へ',sub:'少女の悩みを聞く',chip:'公園',scene:'p_park'},
+  library:{label:'図書館へ',sub:'少女の理由を知る',chip:'図書館',scene:'p_library'},
+  history:{label:'歴史館へ',sub:'国と少女の意味を知る',chip:'歴史館',scene:'p_history'}
+};
+var SPK={'旅':['旅人','tra'],'猫':['黒猫','cat']};
+
+/* 画像の差し込み口。素材が届いたら、ここにファイル名を入れる（null は仮表示） */
+var IMG={
+  bg:{gate:'bg_gate.webp',street:'bg_street.webp',plaza:'bg_plaza.webp',cafe:'bg_cafe.webp',alley:'bg_alley.webp',inn_day:'bg_inn_day.webp',inn_night:'bg_inn_night.webp',inn_front:'bg_inn_front.webp',school:'bg_school.webp',park:'bg_park.webp',library:'bg_library.webp',history:'bg_history.webp',home:'bg_home.webp',road:'bg_road.webp',plaza_night:'bg_plaza_night.webp'},
+  ch:{cat:'ch_cat.png',girl:'ch_girl.png',guide:'ch_guide.png',host:'ch_host.png',teacher:'ch_teacher.png',curator:'ch_curator.png',mother:'ch_mother.png',father:'ch_father.png',father_e4:'ch_father_e4.png',mother_e4:'ch_mother_e4.png',granny:'ch_granny.png',man:'ch_man.png',resident:'ch_resident.png',child:'ch_child.png'}
+};
+var BGNAME={gate:'門の前',street:'駅前の通り',plaza:'広場の噴水',cafe:'カフェ',alley:'路地裏のベンチ',inn_day:'宿の食堂（朝）',inn_night:'宿の部屋（夜）',inn_front:'宿の前（朝）',school:'学校の教室',park:'公園',library:'図書館',history:'歴史館',home:'少女の家の居間',road:'国を出る道'};
+var HUE={gate:200,street:190,plaza:170,cafe:30,alley:215,inn_day:40,inn_night:235,inn_front:195,school:60,park:120,library:25,history:260,home:15,road:150};
+var CHNAME={father_e4:'父',mother_e4:'母',cat:'黒猫',girl:'少女',guide:'案内員',host:'宿の主人',teacher:'先生',curator:'学芸員',mother:'母',father:'父',granny:'老婦人',man:'男の人',resident:'住人',child:'子供'};
+var SPKEY={'猫':'cat','少女':'girl','案内員':'guide','主人':'host','先生':'teacher','学芸員':'curator','母':'mother','父':'father','老婦人':'granny','男':'man','住人':'resident','子供':'child'};
+var BGMAP={arrive:'gate',d1pick:'street',plaza:'plaza',cafe:'cafe',alley:'alley',d1night:'inn_night',d2inn:'inn_day',p_school:'school',d2pick:'street',p_park:'park',p_library:'library',p_history:'history',d2walk:'plaza',d2home:'home',d2night:'inn_night',d3pick:'inn_front',d3bench:'alley',d3walk:'plaza_night',d3night:'inn_night',past:'inn_night',q2:'inn_night',e1:'inn_night',e2:'inn_night',e3:'inn_night',e4:'inn_night',e5:'gate'};
+var CASTINIT={d2pick:['girl'],p_park:['girl'],p_library:['girl'],p_history:['girl'],d2walk:['girl'],d3pick:['girl'],d3bench:['girl'],d3night:['girl'],past:['girl'],q2:['girl'],e1:['girl'],e2:['girl'],e3:['girl'],e5:['girl']};
+var VIS={bg:'',layer:0,npcs:[],active:null,nodes:{}};
+
+function imgSrc(f){return (f.charAt(0)==='/'||/^https?:/.test(f))?f:'img/'+f}
+function paintBg(node,key){
+  var file=IMG.bg[key];
+  node.className='bg '+(file?'img':'ph');
+  node.style.backgroundImage=file?'url("'+imgSrc(file)+'")':'';
+  node.style.setProperty('--h',HUE[key]||200);
+  node.setAttribute('data-label',file?'':'背景　'+(BGNAME[key]||key));
+}
+function setBg(key){
+  if(!key||VIS.bg===key)return;
+  VIS.bg=key;
+  var a=$('bgA'),b=$('bgB');
+  var next=VIS.layer?a:b,prev=VIS.layer?b:a;VIS.layer=VIS.layer?0:1;
+  paintBg(next,key);next.classList.add('on');prev.classList.remove('on');
+}
+function makeSprite(k){
+  var d=el('div','spr'),file=IMG.ch[k];
+  if(file){var im=document.createElement('img');im.src=imgSrc(file);im.alt=CHNAME[k]||k;d.appendChild(im)}
+  else d.appendChild(el('span','',CHNAME[k]||k));
+  return d;
+}
+function syncCast(){
+  var c=$('cast'),want=['cat'].concat(VIS.npcs);
+  Object.keys(VIS.nodes).forEach(function(k){if(want.indexOf(k)<0){c.removeChild(VIS.nodes[k]);delete VIS.nodes[k]}});
+  want.forEach(function(k){
+    var d=VIS.nodes[k];
+    if(!d){d=makeSprite(k);VIS.nodes[k]=d;c.appendChild(d)}
+    var slot=k==='cat'?'cat':'npc s'+VIS.npcs.indexOf(k);
+    d.className='spr k_'+k+' '+slot+(IMG.ch[k]?'':' ph')+(VIS.active===k?' active':'');
+  });
+}
+function speak(sp){
+  if(sp==='旅'){VIS.active=null;syncCast();return}
+  var k=SPKEY[sp];if(!k)return;
+  if(VIS.alias&&VIS.alias[k])k=VIS.alias[k];
+  if(k!=='cat'&&VIS.npcs.indexOf(k)<0){
+    VIS.npcs.push(k);
+    if(VIS.npcs.length>3){var drop=VIS.npcs.filter(function(x){return x!==k})[0];VIS.npcs.splice(VIS.npcs.indexOf(drop),1)}
+  }
+  VIS.active=k;syncCast();
+}
+function drain(){
+  while(Q&&Q.i<Q.lines.length&&String(Q.lines[Q.i][0]).charAt(0)==='@'){
+    var r=Q.lines[Q.i++];
+    if(r[0]==='@bg')setBg(r[1]);
+    else if(r[0]==='@day'){var q=Q;dayBreak(r[1],function(){setBg(r[2])},function(){if(Q===q)nextLine()});return true}
+    else if(r[0]==='@join'){r.slice(1).forEach(function(k){if(VIS.npcs.indexOf(k)<0)VIS.npcs.push(k)});syncCast()}
+    else if(r[0]==='@clear'){VIS.npcs.length=0;VIS.active=null;syncCast()}
+    else if(r[0]==='@leave'){var ix=VIS.npcs.indexOf(r[1]);if(ix>=0){VIS.npcs.splice(ix,1);if(VIS.active===r[1])VIS.active=null;syncCast()}}
+  }
+}
+
+/* 日の区切りの暗転：BGMを絞る→暗転→日数表示→背景を替えて→フェードイン→BGMが戻る */
+var DAY={busy:false,hold:false,pend:null};
+function dayBreak(n,mid,done,opt){
+  opt=opt||{};
+  var FM=REDUCE?300:1600,HM=REDUCE?900:2300;if(opt.place){FM=REDUCE?200:500;HM=REDUCE?500:1100}if(SKIP.on){FM=Math.min(FM,350);HM=Math.min(HM,opt.place?400:700)}
+  DAY.busy=true;
+  var f=$('fade');$('fadeD').textContent=opt.place?opt.place:'滞在 '+n+'日目';$('fadeT').textContent=opt.place?'':(opt.time||'朝');
+  if(!opt.black){f.style.transition='opacity '+FM+'ms ease';if(AUD.a&&!AUD.muted&&!opt.place)bgmFade(AUD.a,0,FM);f.classList.add('on')}
+  setTimeout(function(){
+    DAY.hold=true;DAY.pend=null;
+    stopTyping();wait=null;$('msgText').textContent='';$('msgName').textContent='';$('ind').hidden=true;
+    if(mid)mid();
+    f.classList.add('lab');
+    setTimeout(function(){
+      f.classList.remove('lab');
+      setTimeout(function(){
+        DAY.hold=false;
+        var before=AUD.cur;
+        if(DAY.pend)bgmPlay(DAY.pend);
+        DAY.pend=null;
+        if(AUD.cur===before&&AUD.a&&!AUD.muted){var a=AUD.a;try{if(a.paused){var pr=a.play();if(pr&&pr.catch)pr.catch(function(){})}}catch(e){}bgmFade(a,AUD.vol,FM)}
+        f.style.transition='opacity '+FM+'ms ease';
+        f.classList.remove('on');
+        DAY.busy=false;
+        if(done)done();
+      },600);
+    },HM);
+  },opt.black?250:FM+250);
+}
+
+/* 音楽。曲が届いたら、ここにファイル名を入れる（null の曲は、いま流れている曲をそのまま続ける） */
+var BGM={gate:'bgm_gate.mp3',town:'bgm_town.mp3',walk:'bgm_walk.mp3',home:'bgm_home.mp3',night:'bgm_night.mp3',eve:'bgm_eve.mp3',endA:'bgm_end_a.mp3',endB:'bgm_end_b.mp3',trueEnd:'bgm_true.mp3'};
+var BGMSCENE={arrive:'gate',d1pick:'town',plaza:'town',cafe:'town',alley:'walk',d1night:'night',d2inn:'town',p_school:'town',d2pick:'town',p_park:'walk',p_library:'walk',p_history:'walk',d2walk:'walk',d2home:'home',d2night:'night',d3pick:'walk',d3bench:'walk',d3walk:'walk',d3night:'eve',past:'eve',q2:'eve',e1:'endA',e2:'endA',e3:'endB',e4:'endB',e5:'trueEnd'};
+var AUD={cur:null,a:null,muted:false,vol:0.3};
+try{var _v=parseFloat(localStorage.getItem('kofuku-vol'));if(_v>=0&&_v<=1)AUD.vol=_v}catch(e){}
+try{AUD.muted=localStorage.getItem('kofuku-mute')==='1'}catch(e){}
+function bgmFade(a,to,ms,done){
+  var from=a.volume,t0=Date.now();
+  (function step(){var p=Math.min(1,(Date.now()-t0)/ms);try{a.volume=Math.max(0,Math.min(1,from+(to-from)*p))}catch(e){}
+    if(p<1)setTimeout(step,50);else if(done)done()})();
+}
+function bgmPlay(key){
+  var f=BGM[key];if(!f||AUD.cur===key)return;
+  AUD.cur=key;
+  var old=AUD.a,a=new Audio('audio/'+f);a.loop=true;a.volume=0;AUD.a=a;
+  if(!AUD.muted){var pr=a.play();if(pr&&pr.catch)pr.catch(function(){})}
+  bgmFade(a,AUD.muted?0:AUD.vol,1500);
+  if(old)bgmFade(old,0,1500,function(){old.pause()});
+}
+function renderMute(){var b=$('muteBtn');if(b)b.textContent=AUD.muted?'音 OFF':'音 ON'}
+function toggleMute(){
+  AUD.muted=!AUD.muted;
+  try{localStorage.setItem('kofuku-mute',AUD.muted?'1':'0')}catch(e){}
+  var a=AUD.a;
+  if(a){
+    if(AUD.muted)bgmFade(a,0,300,function(){if(AUD.muted)a.pause()});
+    else{var p=a.play();if(p&&p.catch)p.catch(function(){});bgmFade(a,AUD.vol,600)}
+  }
+  renderMute();
+}
+function enterScene(id){
+  if(DAY.hold)DAY.pend=BGMSCENE[id];else bgmPlay(BGMSCENE[id]);
+  var b=BGMAP[id];if(b)setBg(b);
+  VIS.alias=SC[id].alias||null;VIS.npcs=(CASTINIT[id]||[]).slice();VIS.active=null;syncCast();
+}
+function renderAssets(){
+  var box=$('assetBox');clear(box);
+  var n=0,tot=0;
+  ['bg','ch'].forEach(function(g){Object.keys(IMG[g]).forEach(function(k){tot++;if(IMG[g][k])n++})});
+  box.appendChild(el('div','empty','入っている素材 '+n+' / '+tot));
+  var det=document.createElement('details');det.className='assets';
+  det.appendChild(el('summary','','素材リスト'));
+  [['bg','背景','bg_'],['ch','人物','ch_']].forEach(function(g){
+    det.appendChild(el('h3','',g[1]));
+    Object.keys(IMG[g[0]]).forEach(function(k){
+      var key=g[2]+k;
+      var row=el('div','arow');
+      var left=el('span','',(g[0]==='bg'?BGNAME[k]:CHNAME[k])+'　');
+      left.appendChild(el('code','',key));
+      row.appendChild(left);
+      row.appendChild(el('span',IMG[g[0]][k]?'ok':'no',IMG[g[0]][k]?'入り':'未'));
+      det.appendChild(row);
+    });
+  });
+  box.appendChild(det);
+}
+
+
+
+function fresh(){S={gauge:0,grand:false,visited:[],log:[],vacc:null,after:null,snap:null,scene:null,ended:null}}
+function snapNow(){S.snap=JSON.stringify({gauge:S.gauge,grand:S.grand,visited:S.visited,log:S.log,after:S.after})}
+
+/* 選択肢の作り方: O(種別, 文, 点, 返答, 追加) */
+function O(type,t,pts,res,extra){var o={type:type,t:t,pts:pts,res:res||[]};if(extra)for(var k in extra)o[k]=extra[k];return o}
+
+function placeOptions(){
+  var arr=[];
+  Object.keys(PLACES).forEach(function(k){
+    if(S.visited.indexOf(k)>=0)return;
+    arr.push(O('場所',PLACES[k].label,0,[],{run:function(){S.visited.push(k)},next:PLACES[k].scene}));
+  });
+  return arr;
+}
+function pick(day,time,intro,prompt,after){
+  return {t:[day,time],name:'場所選び',steps:[{lines:intro,choice:{prompt:prompt,options:placeOptions}}],enter:function(){S.after=after}};
+}
+function place(name,steps){return {t:[null,null],name:name,steps:steps,next:function(){return S.after}}}
+
+
+/* トゥルー分岐：前夜の「国の話」 */
+function trueNight(){return [
+  ['少女','……何を、大事にしたらいいのか、分からないんです。'],
+  ['少女','打つ人も、打たない人も、それぞれ、大事にしてるものがあって。……私は、何なんだろうって。'],
+  ['旅','……そうか。'],
+  ['旅','答えは、持ってないんだ。でも、僕が見てきた国の話なら、できるよ。'],
+  ['少女','……聞かせてください。'],
+  ['旅','いろんな国に行ったよ。大切にしてるものが、国ごとに、ぜんぜん違うんだ。'],
+  ['旅','ある国では、約束を石に刻む。破る人はいないけど、一度決めたら、考えを変えられない。'],
+  ['旅','ある国では、毎朝、昨日と違う意見をひとつ言う決まりがある。誰も縛られないけど、約束は、あまり続かない。'],
+  ['旅','ある国では、毎日、正午に広場でみんなが怒る。うるさいけど、次の日には、誰も根に持たない。'],
+  ['猫','どの国も、大切にしたものと引きかえに、手放したものがあった。'],
+  ['旅','僕は、どれも、間違いだとは決めたくない。'],
+  ['少女','……じゃあ、何が正しいんですか。'],
+  ['旅','僕にも分からない。どれも、その国の人たちが大切にしてきたものだから。'],
+  ['旅','僕が知ってるのは、ここまで。見てない国のほうが、ずっと多いよ。'],
+  ['少女','……見てないのに、決められない。'],
+  ['旅','うん。'],
+  ['少女','……もう少し、考えます。'],
+  ['旅','うん。']]}
+function trueUnlocked(){
+  if($('forceTrue')&&$('forceTrue').checked)return true;
+  var r=reached();
+  return S.gauge>=cfg.threshold&&['e1','e2','e3','e4'].every(function(k){return r.indexOf(k)>=0});
+}
+
+/* 向き合い方の共通の返し */
+function sitLines(extra){
+  var L=[
+    ['n','どの言葉を選んでも、旅人は、少女と半歩ぶんの距離を空けずに、隣に座った。'],
+    ['少女','……隣にいるって、言われたの、初めてです。']];
+  if(extra){
+    L.push(['少女','……決めるのは、私、ですね。']);
+    L.push(['n','少女は、少し考えてから、同意書をたたみ直した。']);
+  }
+  return L;
+}
+
+var SC={
+  arrive:{t:[1,'昼'],name:'入国',steps:[{lines:[
+    ['n','門の前。旅人は、地図を畳んだ。'],
+    ['旅','この先が、幸福の国だって。'],
+    ['猫','うん。聞いたことある。'],
+    ['旅','争いが、ひとつもない国なんだって。'],
+    ['猫','どうして？'],
+    ['旅','不幸の予防接種、っていうのがあるらしいんだ。打つと、不幸にならないんだって。'],
+    ['猫','不幸に、ならない。'],
+    ['旅','いい話だよね。'],
+    ['猫','うん。……いい話だね。'],
+    ['n','旅人と黒猫は、門をくぐった。'],
+    ['@bg','street'],
+    ['n','門の向こうは、よく晴れていた。'],
+    ['n','駅前には、パン屋と花屋が並んでいる。パン屋の窓には、焼きたてのパンが同じ間隔で並べられ、花屋の店先では、色のそろった花が小さな桶に挿してあった。通りを歩く人々は、誰も急がず、誰も遅れていなかった。'],
+    ['n','制服を着た案内員が、一礼して近づいてきた。'],
+    ['案内員','ようこそ、幸福の国へ。お疲れでしょう。宿は駅の北側が静かです。ご案内しましょうか。'],
+    ['旅','じゃあ、お願いしようかな。'],
+    ['案内員','承知しました。こちらです。'],
+    ['n','案内員は、半歩先を歩いた。曲がり角ごとに足を止め、旅人が追いつくのを待つ。道は広く、石畳は平らで、段差はひとつもなかった。'],
+    ['旅','いい街だね。……何もかも、すんなり決まるんだ。'],
+    ['猫','うん。そうだね。'],
+    ['n','黒猫は、案内員の影を踏まないよう、少しだけ間を空けて歩いていた。']]}],next:'d1pick'},
+
+  d1pick:{t:[1,'午後'],name:'行き先',steps:[{lines:[['n','宿に荷物を置いても、日はまだ高かった。街は静かで、どちらへ歩いても、きれいに整った景色が続いている。']],choice:{prompt:'行き先を選ぶ（点数なし）',options:[
+    O('場所','広場へ行く',0,[],{next:'plaza'}),
+    O('場所','カフェに入る',0,[],{next:'cafe'})]}}]},
+
+  plaza:{t:[1,'午後'],name:'広場',steps:[
+    {lines:[
+      ['n','広場の真ん中には、小さな噴水があった。水は、いつも同じ高さまで上がり、同じ高さで落ちている。'],
+      ['n','その脇で、男の人が荷物を落とした。通りかかった人と、肩がぶつかったらしい。紙袋から、りんごが二つ転がり出る。'],
+      ['男','失礼しました。前を見ていませんでした。'],
+      ['住人','いえ、こちらこそ。お怪我はありませんか。'],
+      ['@leave','resident'],
+      ['n','二人は一礼した。住人は、反対の方向へ歩き出した。それで終わりだった。'],
+      ['n','男はりんごを拾い、立ち上がった。右のひざを、少しかばっている。'],
+      ['旅','ひざ、痛くない？'],
+      ['男','少し。ですが、歩けますし、自分の不注意ですから。']],
+     choice:{prompt:'旅人は何と返す？（点数なし。この国の返し方を体験する）',options:[
+      O('型','「それは大変だったね」',0,[['男','いえ、こういうこともあります。お気遣い、ありがとうございます。'],['n','男は丁寧に頭を下げて去った。旅人は、自分の返事が、この国の返事とそっくりだったことに気づいた。']]),
+      O('型','「手当て、しようか？」',0,[['男','ご親切に。ですが、すぐ済みますので、お気持ちだけいただきます。'],['n','正しい断り方だった。反論の余地はなく、会話はそこで終わった。']])]}},
+    {lines:[
+      ['@leave','man'],['@leave','resident'],
+      ['n','歩きながら、旅人は黒猫に言った。'],
+      ['旅','さっきの人たち、誰も嫌な顔をしなかったね。'],
+      ['猫','うん。嫌な顔をする理由が、ないんだと思う。'],
+      ['旅','……そうなのかな。'],
+      ['猫','理由がないのと、理由がなくなったのは、違うよ。']]}],next:'alley'},
+
+  cafe:{t:[1,'午後'],name:'カフェ',steps:[
+    {lines:[
+      ['n','カフェの窓際の席は、午後の光でいっぱいだった。隣の席で、老婦人が、亡くなった夫の話をしている。'],
+      ['老婦人','去年、亡くしました。いい人でした。感謝しています。'],
+      ['n','声は落ち着いていて、涙は出ていない。話は、きれいに整理されていた。'],
+      ['旅','寂しくは、ないの？'],
+      ['老婦人','思い出がありますから。十分です。皆さん、そうですよ。']],
+     choice:{prompt:'旅人は何と返す？（点数なし。この国の返し方を体験する）',options:[
+      O('型','「強いんだね」',0,[['老婦人','よく言われます。でも、特別なことではありませんよ。'],['n','謙遜ではなく、事実を確認するような口ぶりだった。']]),
+      O('型','「寂しいときも、あったんじゃないかな」',0,[['老婦人','あったのかもしれません。もう整理がつきましたので。'],['n','老婦人は穏やかに微笑んで、紅茶を一口飲んだ。話はそこで完結した。']])]}},
+    {lines:[
+      ['@leave','granny'],
+      ['n','歩きながら、旅人は黒猫に言った。'],
+      ['旅','さっきの人たち、誰も嫌な顔をしなかったね。'],
+      ['猫','うん。嫌な顔をする理由が、ないんだと思う。'],
+      ['旅','……そうなのかな。'],
+      ['猫','理由がないのと、理由がなくなったのは、違うよ。']]}],next:'alley'},
+
+  alley:{t:[1,'夕方'],name:'路地裏',steps:[
+    {lines:[
+      ['n','日が傾くころ、旅人は大通りを外れた。人通りは、そこで急に途絶える。'],
+      ['n','路地裏のベンチの前で、少女が果物を拾っていた。袋から落ちたらしい。りんごが、石畳の隙間に転がっている。'],
+      ['少女','……はぁ。なんで私って、こうなんだろう。'],
+      ['n','誰も見ていないと思っているのだろう。旅人は足を止めた。黒猫が、じっと少女を見る。']],
+     choice:{prompt:'少女に声をかける（小）',options:[
+      O('A','「今のため息、聞こえたよ」',1,[['少女','……聞こえた、んですか。']]),
+      O('B','「何かあった？」',1,[['少女','……ううん。ううん、あの。']]),
+      O('C','「誰にでもあることだよ。気にしないのが一番だよ」',-1,[['少女','……ありがとう、ございます。'],['n','少女は、礼儀正しく頭を下げた。この街の誰とも、同じ角度で。']])]}},
+    {lines:[
+      ['@leave','girl'],
+      ['n','少女が去ったあと、黒猫が言った。'],
+      ['猫','あの子、ため息をついたあとに、周りを見たよ。'],
+      ['旅','見てた？'],
+      ['猫','誰かに聞かれてないか、確かめてた。……ここでは、ため息は隠すものみたい。'],
+      ['旅','……。']]}],next:'d1night'},
+
+  d1night:{t:[1,'夜'],name:'宿',steps:[{lines:[
+    ['n','宿の部屋には、清潔なシーツと、小さな明かりがあった。窓の外では、街灯が決まった間隔で灯っている。'],
+    ['旅','いい国だね。道は広くて、人は親切で、誰も怒鳴らないんだ。'],
+    ['猫','うん。誰も、ぶつからない。'],
+    ['n','黒猫は窓の外を見ている。夜の街は、静かに整っていた。'],
+    ['旅','ねえ、黒猫。この国、嫌いじゃないよ。'],
+    ['猫','うん。嫌いじゃないよ。'],
+    ['旅','でも、なんだか落ち着かないんだ。'],
+    ['猫','落ち着きすぎてるからだよ。']]}],next:'d2inn'},
+
+  d2inn:{t:[2,'朝'],name:'宿の食堂',steps:[{lines:[
+    ['n','二日目の朝。宿の食堂には、焼いたパンと紅茶の匂いがあった。客は旅人だけで、卓はどれも、同じ向きに椅子が引かれている。'],
+    ['n','主人が、ポットを持って近づいてきた。'],
+    ['主人','今日は、学校の見学日なんですよ。是非、ご覧になってください。この国の誇りです。'],
+    ['旅','いいの？　じゃあ、せっかくだから、見せてもらおうかな。'],
+    ['主人','ええ、ええ。是非。皆さん、喜びますから。'],
+    ['n','主人は、空になったカップに紅茶を注いだ。こぼれなかった。'],
+    ['猫','……。'],
+    ['旅','何か気になる？'],
+    ['猫','あの人、「皆さん喜びますから」って言った。'],
+    ['旅','うん。'],
+    ['猫','誰が喜ぶのかは、言わなかったね。']]}],next:'p_school'},
+
+  p_school:{t:[2,'午前'],name:'学校',steps:[
+    {lines:[
+      ['n','学校の教室は、窓が大きくて明るかった。テストが返されている。'],
+      ['n','点数の低かった生徒が、答案を見直して言う。「ここが弱いと分かりました。次は直します」'],
+      ['n','隣の子が頷く。「僕も同じ所を間違えた。一緒にやろう」。誰も落ち込まず、誰も慰めない。必要がないからだ。'],
+      ['先生','無理しなくていいよ。できるようになるまで、待とう。急ぐ必要はないからね。'],
+      ['n','先生が言った相手は、窓際の席の少女だった。答案を見つめたまま、何も言い返さない。'],
+      ['先生','そうだ。せっかくですから、この子に街を案内してもらいましょう。外の方に街を知ってもらう、いい機会です。'],
+      ['旅','あ、昨日の。'],
+      ['少女','……こんにちは。'],
+      ['先生','この子はあと二日で十八、まだ接種前です。少し特別なので、いい経験になりますよ。'],
+      ['少女','……はい。'],
+      ['旅','あの、よければ、名前を——'],
+      ['先生','では、お願いしますね。夕方までには、戻ってきてください。'],
+      ['n','先生は、にこやかに手を振った。少女は、深く一礼した。旅人の言葉は、行き場を失った。'],
+      ['@leave','teacher'],
+      ['少女','……行きましょうか。'],
+      ['n','校門を出たところで、少女が小さく言った。'],
+      ['少女','……私だけ、ずっと待たれてるんです。今みたいに。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「悔しかったんだね」',1,[['少女','……うん。悔しい。久しぶりに、言えた。']]),
+      O('B','「待たれるのは、いや？」',1,[['少女','いやじゃない。正しいから。……正しいから、何も言えない。']]),
+      O('C','「優しい先生だね」',-1,[['少女','……そう、ですよね。優しい。ほんとうに。']])]}},
+    {lines:[['少女','解けないのが、悪いことみたいで。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「解けなくて、もどかしかったんだね」',1,[['少女','もどかしい。……そうか、そういう名前なんだ。']]),
+      O('B','「悪いことだって、誰かに言われた？」',1,[['少女','言われてない。誰にも。……だから、余計に。']]),
+      O('C','「大丈夫、そのうち解けるよ」',-1,[['少女','……はい。']])]}},
+    {lines:[
+      ['n','少女は、旅人たちの半歩うしろを歩いていた。案内をするのは彼女のはずなのに、距離はそうなっていなかった。'],
+      ['猫','あの子、答案を見ていたとき、手が震えてた。'],
+      ['旅','気づかなかった。'],
+      ['猫','先生は見てた。見て、待つって言った。'],
+      ['旅','……優しいんだよね。'],
+      ['猫','優しいね。……すごく。'],
+      ['旅','そういえば、あの子の名前、聞きそびれたね。'],
+      ['猫','あの子、まだ一度も、名前で呼ばれてない。'],
+      ['旅','……そうだったかな。'],
+      ['猫','「この子」とか、「あなた」とか。'],
+      ['旅','……あとで、また聞いてみるよ。'],
+      ['猫','うん。……聞けるといいね。']]}],next:'d2pick'},
+
+  d2pick:pick(2,'午後',[['少女','……どこか、見たいところはありますか。'],['n','少女の案内で、午後は一か所、歩く時間がある。']],'どこへ行きますか？（少女の案内・午後）','d2walk'),
+
+  p_park:place('公園',[
+    {lines:[
+      ['n','少女に案内されて、公園へ。広場の端のベンチに、少女と並んで座る。芝生はどこも同じ高さに刈り揃えられている。通りを、大人びた顔の人たちが、静かに行き交っている。'],
+      ['n','芝生の向こうで、小さな子供が転んだ。膝を打ったらしい。子供は泣かなかった。ゆっくり立ち上がり、膝の土を払って、言った。'],
+      ['子供','大丈夫です。'],
+      ['n','周りの子供たちが、頷く。「偉いね」「いつも通りだね」。誰も駆け寄らず、誰も慌てなかった。遊びは、そのまま続いた。'],
+      ['n','少女は、その様子を見ていた。'],
+      ['@leave','child'],
+      ['少女','私も、あのくらいの頃、転んで泣いたことがあるんです。そしたら、みんな「大丈夫だよ」って言って、離れていきました。'],
+      ['少女','この国の人は、みんな大人みたいです。子供も、小さいときから。'],
+      ['少女','転んでも泣かないし、怒らないし、誰かのせいにもしない。すごいと思います。……でも、私だけ、ずっと子供のままみたいで。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「ひとりだけ、置いていかれてる気がしたんだね」',1,[['少女','……はい。置いていかれてる。みんな、前を歩いているのに。']]),
+      O('B','「大人になり方が、分からないのかな」',1,[['少女','……そうです。どうすれば、あの人たちみたいに、なれるのか。']]),
+      O('C','「そのうち、大人になれるよ」',-1,[['少女','……はい。']])]}},
+    {lines:[['少女','みんなの話し方が、私だけ、分からないんです。分かるふりは、できるんだけど。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「分かるふりを、してたんだね」',1,[['少女','……ずっと。ずっと、疲れました。']]),
+      O('B','「分からないとき、どんな気持ちになる？」',1,[['少女','ひとりだけ、違う国にいるみたい。……ここは、私の国なのに。']]),
+      O('C','「分からなくても、気にしなくていいよ」',-1,[['少女','……はい。みんな、そう言います。']])]}},
+    {lines:[
+      ['n','少女は、ふいに口の端を持ち上げて見せた。'],
+      ['少女','……こうすると、みんな、安心するんです。'],
+      ['n','きれいな笑顔だった。目だけが、笑っていなかった。'],
+      ['少女','鏡の前で、何回も練習しました。'],
+      ['n','黒猫が、少女のそばに寄ってきた。少女は、それを黙って見ていた。'],
+      ['n','少女がベンチから立ち上がり、水を飲みに行った。旅人は、黒猫に小さく話しかけた。'],
+      ['旅','あの子、笑ったね。'],
+      ['猫','笑ってた。……でも、あれは「笑う」じゃなくて、「見せる」だと思う。'],
+      ['旅','うまかったよね。'],
+      ['猫','うまいのが、いちばん、さみしい。']]}]),
+
+  p_library:place('図書館',[
+    {lines:[
+      ['n','少女に案内されて、図書館へ。静かで、整っている。返却棚の本は、背表紙の向きまで揃っている。'],
+      ['n','少女は、隅の席に座った。古い本を、膝の上で開く。紙は黄ばんで、角が丸くなっていた。'],
+      ['少女','祖父の本です。泣くのも怒るのも大事だ、って言う人でした。'],
+      ['n','余白には、鉛筆の小さな字が並んでいた。「ここで、腹が立った。理由は分からない」「胸が痛い。三日、引きずった」「泣いた。恥ずかしくはなかった」。どれも、本の内容とは関係のない、祖父自身の感情だった。'],
+      ['少女','祖父は、本を読むたびに、自分のことを書いていたんです。嬉しいも、腹が立つも、全部。'],
+      ['少女','祖父は、予防接種を打たなかった人でした。この国では、ずっと、変わり者って呼ばれていて。'],
+      ['少女','でも、嬉しいも、腹が立つも、全部ちゃんと感じて生きたいって、言っていました。'],
+      ['n','少女は、最後のページをめくった。一番下に、祖父の字で、短い問いが書かれていた。少女は、小さな声で読んだ。'],
+      ['少女','「嬉しくも、悲しくもない。周りの人たちは、灰色の顔をしている。あの灰色も、感情と呼んでいいのだろうか。」'],
+      ['少女','その下に、もう一行あるんです。「答えは、まだ出ない。出ないまま、残しておく」って。'],
+      ['少女','祖父は、打った人たちを、責めてはいなかったんです。ただ、ずっと、不思議に思っていました。'],
+      ['少女','十八になるまで、涙も怒りも、捨てずに持っていなさいって。……遺言、です。'],
+      ['少女','だから、両親は、私にだけ、接種を待ってくれているんです。'],
+      ['少女','でも、持っているのが、苦しくて。']],
+     enter:function(){S.grand=true;S.log.push({n:'図書館',t:'祖父フラグ',p:0,tot:S.gauge,note:true})},
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「苦しいって、言っていいんだよ」',1,[['少女','……はい。ここでは、誰にも言えなかったから。']]),
+      O('B','「おじいさんは、どんな人だった？」',1,[['少女','声が大きくて、よく泣く人でした。……私、あの涙が好きだった。']]),
+      O('C','「おじいさんも、きっと見守ってるよ」',-1,[['少女','……そうだと、いいです。']])]}},
+    {lines:[['少女','約束、守れてる気がしないんです。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「守りたいのに、苦しいんだね」',1,[['少女','そう。守りたいのに。']]),
+      O('B','「約束の言葉を、もう一回聞かせてくれる？」',1,[['少女','「捨てずに持っていておくれ。選択は、それからでいい」。']]),
+      O('C','「気にしなくていいよ。楽になっていいんだよ」',-1,[['少女','……楽に。']])]}},
+    {lines:[
+      ['n','少女は、本を返却棚に戻しに行った。旅人は、その背中を目で追いながら、黒猫に言った。'],
+      ['旅','おじいさん、どんな人だったんだろうね。'],
+      ['猫','小さい字で、たくさん書く人。'],
+      ['旅','……打たなかったんだね。'],
+      ['猫','打てなかったんじゃなくて、打たなかったんだと思う。'],
+      ['旅','あの灰色も、感情なのかな。'],
+      ['猫','灰色に見えるだけかもしれない。中までは、見えないから。']]}]),
+
+  p_history:place('歴史館',[
+    {lines:[
+      ['n','少女に案内されて、歴史館へ。入口には「この国のあゆみ」と書かれている。館内は涼しく、足音がやさしく吸い込まれる。'],
+      ['学芸員','ようこそ。外の方ですね。ご説明しましょうか。'],
+      ['旅','お願いしようかな。'],
+      ['学芸員','昔、この国は、痛みの多い国でした。病気、喪失、争い。苦しみが苦しみを呼んで、人は疲れ果てていました。'],
+      ['学芸員','そこで生まれたのが、予防接種です。体の中の小さな機械が、苦しみを、前向きな納得に変えてくれます。'],
+      ['学芸員','接種は、子供のうちに。それ以来、この国では、誰も長くは苦しみません。'],
+      ['旅','……すごいんだね。'],
+      ['学芸員','ええ。この国の誇りです。'],
+      ['旅','……打たない人も、いるの？'],
+      ['学芸員','この国には、いません。接種のあとは、泣くことも、怒ることも、静かな思い出になります。誰も、困らないんです。'],
+      ['n','学芸員は、少女のほうを見て、穏やかに微笑んだ。'],
+      ['学芸員','あなたも、もうすぐですね。皆さん、楽しみにしていますよ。'],
+      ['少女','……はい。'],
+      ['n','展示の出口には、来場者の感想が並んでいる。「いい時代に生まれた」「痛みのない国で、良かった」。来場者は頷き合って、次の展示へ進んでいく。誰も口ごもらない。少女は、パネルの前で立ち止まった。'],
+      ['少女','……私だけ、まだなんです。みんな、小さい頃に済んでいるのに。'],
+      ['少女','……「良かった」って、言えないんです、私。みんなが言うところで。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「言えなくて、つらかったんだね」',1,[['少女','つらい、んだと思います。たぶん。']]),
+      O('B','「言えないとき、胸のあたりはどうなる？」',1,[['少女','ぎゅっとなります。……そこだけ、ちゃんと私です。']]),
+      O('C','「そのうち言えるようになるよ」',-1,[['少女','……はい。']])]}},
+    {lines:[['少女','私のこれは、変なんでしょうか。']],
+     choice:{prompt:'少女に返す（小）',options:[
+      O('A','「変じゃないよ。ちゃんと感じてるんだね」',1,[['少女','……感じてる。']]),
+      O('B','「変だって、誰が決めたんだろう」',1,[['少女','……誰、だろう。']]),
+      O('C','「個性だよ。気にしなくていいよ」',-1,[['少女','こせい……。みんな、そう言います。']])]}},
+    {lines:[
+      ['@leave','curator'],
+      ['n','少女が、出口で係の人に一礼している。旅人は、その間に黒猫へ言った。'],
+      ['旅','みんな、本当に困ってないんだね。'],
+      ['猫','困ってない、ってことになってる。'],
+      ['旅','……誇りって、言ってた。'],
+      ['猫','困らないことが、誇りになるんだね。']]}]),
+
+  d2walk:{t:[2,'夕方'],name:'帰り道',steps:[{lines:[
+    ['n','帰り道の広場では、噴水がやはり同じ高さで上がっていた。'],
+    ['猫','あの子、今日はずっと、半歩うしろにいるね。'],
+    ['旅','案内してくれてるのに？'],
+    ['猫','案内してるのに。'],
+    ['旅','……前に出ていいよって、言ったほうがいいのかな。'],
+    ['猫','言われて前に出るのと、自分で出るのは、違うよ。'],
+    ['n','広場を抜けるころ、少女が、ふいに足を止めた。'],
+    ['少女','……あの、もう夕方なので。よかったら、うちに寄っていきませんか。'],
+    ['旅','いいの？'],
+    ['少女','両親が、旅の人が来たら、ぜひ家にお招きしなさいって。……この国では、そうするんです。'],
+    ['旅','じゃあ、お邪魔しようかな。'],
+    ['猫','あの子、断られたくない声だった。']]}],next:'d2home'},
+
+  d2home:{t:[2,'夕方'],name:'少女の家',steps:[
+    {lines:function(){
+      var L=[
+        ['n','少女の家は、街の中のどの家とも同じように、小ぎれいだった。居間に通される。'],
+        ['母','いらっしゃい。娘がお世話になっています。'],
+        ['父','もうすぐ十八です。つらい時期ですが、ここを越えれば、私たちと同じように楽になれます。'],
+        ['母','この国の子は、みんな小さいうちに済ませます。この子だけ、遅れているだけなの。'],
+        ['父','あれは、苦しみを、前向きな納得に変えてくれます。つらい思いは、もうしなくていいんです。'],
+        ['n','テーブルの上に、一枚の紙。「同意書」と書かれている。'],
+        ['母','急がなくていいのよ。でも、いつでもサインしていいの。あなたの気持ちは、よく分かるわ。'],
+        ['父','ただ、十八の誕生日が、約束の日です。そこからは、私たちが決めることではなくなります。'],
+        ['母','十八になれば、同意書は、あなた自身の名前で出すものになるわ。それからは、あなたが決めていいの。'],
+        ['n','両親の言うことは、全部もっともだった。少女は、笑わなかった。']];
+      L.push(['少女','……私だけ、まだ、持ったままなんです。みんなが、もう手放したものを。']);
+      L.push(['少女','苦しいって言うと、「分かるよ、つらいね。でも、すぐ楽になるよ」って返ってくるんです。正しいんです。……全部。']);
+      return L;
+    },
+    choice:{prompt:'少女に返す（中）',options:[
+      O('A','「それは、さみしいね」',2,[['少女','……はい。さみしい。']]),
+      O('B','「聞いてほしいのは、どんな言葉？」',2,[['少女','「苦しいね」って、一回だけ。']]),
+      O('C','「ご両親は愛してくれてるよ。大丈夫」',-2,[['少女','……はい。大丈夫、です。']])]}}],next:'d2night'},
+
+  d2night:{t:[2,'夜'],name:'宿',steps:[{lines:[
+    ['n','宿の窓からは、決まった間隔の街灯が見える。'],
+    ['旅','どの人も、言うことがもっともなんだよね。反論の余地がないんだ。'],
+    ['旅','それなのに、どの話も、すんなり終わってしまう。'],
+    ['猫','……音が、しないね。'],
+    ['旅','あの子の両親、いい人たちだったね。'],
+    ['猫','うん。いい人たち。'],
+    ['旅','……何が引っかかるんだろう。'],
+    ['猫','ひとつも、間違ってないところ。'],
+    ['旅','間違ってないのに？'],
+    ['猫','間違ってないのに、ね。'],
+    ['旅','……あの子の言葉は、どこに置けばいいんだろう。']]}],next:'d3pick'},
+
+  d3pick:pick(3,'午前',[['n','三日目。誕生日まで、あと一日。朝の宿の前で、少女が、また待っていてくれた。空は、昨日と同じように晴れている。'],['少女','今日も、案内します。……あと一か所くらい、行けると思います。'],['n','まだ回っていない場所が、二つ残っている。行けるのは、一つだけ。']],'どこへ行きますか？（少女の案内・午前）','d3bench'),
+
+  d3bench:{t:[3,'夕方'],name:'路地裏のベンチ',steps:[
+    {lines:function(){
+      var L=[
+        ['n','夕方。路地裏のベンチに、少女が座っていた。手の中に同意書がある。折り目は、何度も折り直された跡があった。'],
+        ['少女','みんなと、同じになりたい。'],
+        ['少女','幸せになりたいんじゃなくて。……ひとりじゃ、なくなりたい。']];
+      return L;
+    },
+    choice:{prompt:'少女に返す（中）',options:[
+      O('A','「ひとりが、つらかったんだね」',2,[['少女','……つらかった。ずっと。']]),
+      O('B','「ひとりじゃなくなるって、どんな感じだと思う？」',2,[['少女','同じ言葉で、話せるってこと。……でも、その言葉は、今の私の言葉じゃない。']]),
+      O('C','「つらいなら、考えなくていいよ」',-2,[['少女','……考えなくて、いい。']])]}},
+    {lines:[
+      ['n','少女は、同意書をたたみ直していた。旅人は、その手元を見ながら、黒猫に小さく言った。'],
+      ['旅','あの紙、何度も折ったんだね。'],
+      ['猫','折り目が、全部、違う場所についてる。'],
+      ['旅','……迷った数かな。'],
+      ['猫','迷った数だけ、あの子は、ちゃんと考えた。']]}],next:'d3walk'},
+
+  d3walk:{t:[3,'夜'],name:'宿へ戻る道',steps:[{lines:[
+    ['n','日が落ちて、街灯が決まった間隔で点いた。少女を家の前で見送って、旅人と黒猫は、宿へ歩いた。'],
+    ['n','途中の広場で、噴水の水が、昼間より少しだけ不ぞろいに上がっていた。風のせいかもしれなかった。旅人は、何も言わなかった。'],
+    ['旅','明日、あの子の誕生日だね。'],
+    ['猫','十八になる日。'],
+    ['旅','僕たちに、何かできるのかな。'],
+    ['猫','できることは、少ないよ。聞くことと、そばにいることくらい。'],
+    ['旅','それだけ？'],
+    ['猫','うん。それだけ。']]}],next:'d3night'},
+
+  d3night:{t:[3,'夜'],name:'前夜',enter:function(){snapNow()},steps:[{lines:[
+    ['n','前夜。宿の扉が、小さく叩かれた。'],
+    ['少女','……明日、十八になります。打つべきか、教えてください。'],
+    ['n','少女は、同意書を握っていた。紙の端が、手汗で少しやわらかくなっている。黒猫が、その足元に座る。']],
+    choice:{prompt:'少女の問いに応える（大）',options:[
+      O('A','「迷ってるんだね」',3,[['少女','……はい。迷って、います。']]),
+      O('B','「きみは、どうしたい？」',3,[['少女','わからない。でも、決めなきゃいけないのは、分かってます。']]),
+      O('D','「少し、僕の話をしてもいい？」',3,[],{next:'past'}),
+      O('C','「大丈夫。そのうち、全部楽になるよ」',-3,[['少女','……そう、ですよね。'],['n','少女は、きれいに笑った。']])]}}],next:'q2'},
+
+  past:{t:[3,'夜'],name:'旅人の過去',steps:[{lines:[
+    ['n','旅人は、少女の隣に腰を下ろした。窓の外を眺めながら、ゆっくりと話し始める。'],
+    ['旅','昔の僕は、「分かるよ」って言う側だったんだ。'],
+    ['旅','全部「分かるよ、仕方ないよ」で終わらせてた。みんな、助かるって言ってくれたんだ。'],
+    ['旅','ある日、自分が何に怒ってたのか、思い出せなくなってた。'],
+    ['少女','……ここの人たちと、似てますか。'],
+    ['旅','似てる。でも、この人たちは、そうなるのが普通の国で育ったんだ。僕は、自分でそうなった。……きみは、まだ選べるよ。'],
+    ['少女','……今、「分かるよ」って、言いませんでしたね。'],
+    ['旅','うん。言わないことにしたんだ。'],
+    ['猫','……昔の話、初めて聞いた。']]}],next:'q2'},
+
+  q2:{t:[3,'夜'],name:'向き合い方',steps:[{lines:[
+    ['n','少女は、うつむいたまま言った。'],
+    ['少女','……そばに、いてくれますか。どちらを選んでも。']],
+    choice:{prompt:'旅人は何と言う？（点数なし。接種の有無が決まる）',options:function(){var L=[
+      O('向き合い','「打つことになっても、その日も隣にいるよ」',0,sitLines(false),{tag:'→ 接種する',run:function(){S.vacc=true},next:function(){return endingId()}}),
+      O('向き合い','「打たなくても、ずっと隣にいるよ」',0,sitLines(false),{tag:'→ 接種しない',run:function(){S.vacc=false},next:function(){return endingId()}}),
+      O('向き合い','「どちらでも、隣にいる。決めるのは、きみだよ」',0,sitLines(true),{tag:function(){return S.grand?'→ 接種しない（祖父フラグ有）':'→ 接種する（祖父フラグ無）'},run:function(){S.vacc=!S.grand},next:function(){return endingId()}})];
+      if(trueUnlocked())L.push(O('向き合い','「隣にいるよ。……いま、何が引っかかってるの？」',0,sitLines(false).concat(trueNight()),{tag:'→ トゥルー⑤（4ED既読＋ゲージ高）',run:function(){S.vacc=false},next:'e5'}));
+      return L}}}]}
+};
+
+/* エンディング */
+var END_T=[0,'朝'];
+var ENDINGS={
+  e1:{no:'①',name:'ほどける',vacc:true,high:false,lines:function(){return[
+    ['@leave','girl'],
+    ['n','前夜、少女は黙ってうなずき、同意書を握って帰っていった。'],
+    ['@day',4,'inn_front'],
+    ['@join','girl'],
+    ['n','翌朝。宿の前に現れた少女は、両親と同じ穏やかな笑顔をしていた。服は新しく、髪は整えられている。手には、何も持っていなかった。目の下の影は、薄くなっている。よく眠れたのだろう。それは、たしかだった。'],
+    ['旅','……。'],
+    ['少女','ありがとうございました。'],
+    ['n','きれいな笑顔だった。去り際、黒猫が一度だけ振り返る。'],
+    ['猫','痛みは、知らせだよ。'],
+    ['n','少女の笑顔は、変わらなかった。'],
+    ['n','旅人は、「聞こえていたのに」と思った。'],
+    ['@clear'],
+    ['@bg','road'],
+    ['n','国を出る道で。'],
+    ['旅','……僕、間違えたのかな。'],
+    ['猫','どれが？'],
+    ['旅','全部、かな。'],
+    ['猫','全部は、ないよ。']]}},
+  e2:{no:'②',name:'閉じる',vacc:true,high:true,lines:function(){return[
+    ['少女','悔しいです。さみしいです。全部、ちゃんとここにあります。……それでも、打ちます。'],
+    ['少女','悲しいまま、動けなくなるのは、嫌なんです。だから、自分で選びます。'],
+    ['少女','おじいちゃんは、私に、考える時間をくれたんだと思います。'],
+    ['@day',4,'inn_front'],
+    ['n','翌朝。少女は、旅人と黒猫の前に立った。服は昨日と同じ。手の中に、同意書はなかった。'],
+    ['少女',cfg.name+'です。私の名前。'],
+    ['旅','……教えてくれて、ありがとう。'],
+    ['n','涙が一粒、落ちた。感謝の涙ではなかった。この国では、異物の涙。'],
+    ['猫','痛みは、きみの言葉だよ。'],
+    ['少女','うん。……私の、言葉。'],
+    ['n','選んだのは、彼女だった。'],
+    ['@clear'],
+    ['@bg','road'],
+    ['n','国を出る道で。'],
+    ['旅','あの子、名前を言ったね。'],
+    ['猫','うん。いい名前。'],
+    ['旅','……痛みは、あの子の言葉なんだね。'],
+    ['猫','ちゃんと、届いてたよ。']]}},
+  e3:{no:'③',name:'ひとり',vacc:false,high:false,lines:function(){return[
+    ['少女','打ちません。……理由は、うまく言えないけど。まだ、決められないだけかもしれません。'],
+    ['@day',4,'street'],
+    ['@leave','girl'],
+    ['n','翌朝も、街はやさしかった。「決まったら、いつでも言ってね」と、誰もが同じ調子で声をかけていく。責める人は、ひとりもいなかった。'],
+    ['@bg','alley'],
+    ['@join','girl'],
+    ['n','旅立ちの日。少女は路地裏のベンチに座っていた。小さく、手を振った。'],
+    ['猫','痛みは、知らせだよ。'],
+    ['n','少女は何も返さず、うつむいた。それから、小さく息を吐いた。周りを見回すことは、しなかった。'],
+    ['n','ベンチのそばには、昨日まで旅人と黒猫がいた。それだけは、消えない。'],
+    ['@clear'],
+    ['@bg','road'],
+    ['n','国を出る道で。'],
+    ['旅','あのベンチ、また行ったら、いるかな。'],
+    ['猫','いるかもしれない。いないかもしれない。'],
+    ['旅','……。'],
+    ['猫','でも、手は振ってくれた。']]}},
+  e4:{no:'④',name:'ことば',vacc:false,high:true,lines:function(){var N=cfg.name;return[
+    ['少女','今日は、決めません。……でも、逃げるんじゃないです。'],
+    ['@day',4,'home'],
+    ['@join','girl','mother_e4','father_e4'],
+    ['n','翌朝。少女は、両親の前に立った。居間のテーブルには、同意書がそのまま置かれている。'],
+    ['少女','これは、悲しいっていうことなの。'],
+    ['母','そうなんだね。話してくれて、ありがとう。'],
+    ['n','母の顔は、いつもと同じ穏やかさだった。それが何を意味するのか、少女にも分からなかった。それでも少女は、もう自分を責めなかった。'],
+    ['少女','……お母さん。私の名前、呼んで。'],
+    ['母',N+'。'],
+    ['父','……'+N+'。'],
+    ['n','慰めも、説明もなかった。ただ、名前を呼ばれた。'],
+    ['n','少女は、旅人のほうを向いた。'],
+    ['少女',N+'です。私の名前。'],
+    ['旅','うん。……教えてくれて、ありがとう。'+N+'。'],
+    ['猫','痛みは、きみの言葉だよ。'],
+    ['少女','うん。'],
+    ['@clear'],
+    ['@bg','road'],
+    ['n','国を出る道で。'],
+    ['旅','あの子のお母さん、「そうなんだね」って言ってたね。'],
+    ['猫','通じたかは、分からない。でも、あの子は、言った。'],
+    ['旅','それで、いいのかな。'],
+    ['猫','通じたかどうかより、言えたことが、あの子の音になった。']]}},
+  e5:{no:'⑤',name:'ひらく',vacc:false,high:true,lines:function(){var N=cfg.name;var L=[
+    ['n','翌朝。少女は、国の門の前に立っていた。旅人と黒猫を、見送るために。'],
+    ['少女','決めました。……今は、打ちません。'],
+    ['旅','そっか。'],
+    ['少女','おじいちゃんが、そうだったからじゃないです。']];
+    if(S.grand)L.push(['少女','おじいちゃんとの約束は、今日までだから。ここからは、私の約束です。']);
+    return L.concat([
+    ['少女','もっと、いろんなものを見て、知りたい。……それから、自分で選びたいんです。私にとって、何が大切なのか。'],
+    ['旅','打つって決めても、いいんだよ。'],
+    ['少女','はい。それも、私が決めます。'],
+    ['少女','同意書は、家のテーブルに、置いてきました。いつでも、自分の名前で出せるように。'],
+    ['少女','まだ、分からないことばっかりです。'],
+    ['猫','それで、いいんじゃない。'],
+    ['猫','痛みは、きみの言葉だよ。'],
+    ['少女','うん。……だから、まだ、持ってます。'],
+    ['少女',N+'です。私の名前。……また、来てください。'],
+    ['旅','うん。……'+N+'。またね。'],
+    ['n','門の向こうは、よく晴れていた。'],
+    ['n','旅人と黒猫は、門をくぐった。少女は、見えなくなるまで、手を振っていた。'],
+    ['@clear'],
+    ['@bg','road'],
+    ['n','国を出る道で。'],
+    ['旅','あの子、見てみたいって言ったね。'],
+    ['猫','うん。まだ、知らないものが、あるから。'],
+    ['旅','……僕も、そうだね。']])}}
+};
+SC.d2inn.dayBreak=2;SC.d3pick.dayBreak=3;
+SC.d2home.place='少女の家へ';SC.d2night.place='宿へ戻る';SC.d3night.place='宿へ戻る';
+Object.keys(ENDINGS).forEach(function(k){
+  var e=ENDINGS[k];
+  SC[k]={t:END_T,name:'エンディング'+e.no,ending:k,steps:[{lines:e.lines}]};
+});
+SC.e5.dayBreak=4;
+SC.e4.alias={mother:'mother_e4',father:'father_e4'};
+function endingId(){
+  var high=S.gauge>=cfg.threshold;
+  return S.vacc?(high?'e2':'e1'):(high?'e4':'e3');
+}
+
+/* 描画 */
+function clear(el){while(el.firstChild)el.removeChild(el.firstChild)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function scrollTo(){}
+function shuffle(a){
+  var r=a.slice();
+  for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t}
+  return r;
+}
+
+function header(t){
+  var left=$('hdLeft'),right=$('hdRight');clear(left);right.textContent='';
+  var d=t[0];
+  if(d===0){left.textContent='滞在 4日目'}
+  else if(d){
+    var ticks=el('span','ticks');
+    for(var i=1;i<=3;i++)ticks.appendChild(el('span','tick'+(i<=d?' on':'')));
+    left.appendChild(ticks);left.appendChild(document.createTextNode('滞在 '+d+'日目'));
+  }
+  if(t[1])right.textContent=t[1];
+}
+
+var LOGV=[];
+var T={timer:0,full:'',pos:0,typing:false};
+var wait=null;
+var REDUCE=false;try{REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+/* 既読スキップ：読んだ行は記録され、スキップ中は既読の行だけを速く送る（未読の行で止まる） */
+var READ={};try{JSON.parse(localStorage.getItem('kofuku-read')||'[]').forEach(function(k){READ[k]=1})}catch(e){}
+var SKIP={on:false,t:0};
+function saveRead(){try{localStorage.setItem('kofuku-read',JSON.stringify(Object.keys(READ)))}catch(e){}}
+function lineKey(row){return (S&&S.scene||'')+'|'+row[0]+'|'+row[1]}
+function setSkip(v){
+  SKIP.on=!!v;if(SKIP.t){clearTimeout(SKIP.t);SKIP.t=0}
+  var b=$('skipBtn');if(b){b.classList.toggle('on',SKIP.on);b.textContent=SKIP.on?'スキップ中':'スキップ'}
+  if(SKIP.on&&Q&&T.typing&&LASTSEEN&&!DAY.busy)finishTyping();
+  else if(SKIP.on&&Q&&wait==='line'&&!T.typing&&!DAY.busy)queueSkip();
+}
+function queueSkip(){
+  if(SKIP.t)clearTimeout(SKIP.t);
+  SKIP.t=setTimeout(function(){SKIP.t=0;if(SKIP.on&&!DAY.busy&&Q&&wait==='line'&&!T.typing)step()},SKIP_MS);
+}
+var SKIP_MS=45,LASTSEEN=false;
+function addLine(row){
+  speak(row[0]);
+  var info=SPK[row[0]];
+  var name=row[0]==='n'?'':(info?info[0]:row[0]);
+  var nm=$('msgName');nm.textContent=name;nm.className='nm'+(info?' '+info[1]:'');
+  LOGV.push({n:name,t:row[1]});if(LOGV.length>400)LOGV.shift();
+  var key=lineKey(row),seen=!!READ[key];READ[key]=1;LASTSEEN=seen;
+  if(SKIP.on&&!seen)setSkip(false);
+  typeText(row[1]);
+  if(SKIP.on&&seen&&T.typing)finishTyping();
+}
+function typeText(str){
+  stopTyping();wait=null;$('ind').hidden=true;
+  T.full=str;T.pos=REDUCE?Math.max(0,str.length-1):0;T.typing=true;$('msgText').textContent='';
+  tick();
+}
+function tick(){
+  T.timer=0;
+  if(T.pos<T.full.length)T.pos++;
+  $('msgText').textContent=T.full.slice(0,T.pos);
+  if(T.pos>=T.full.length){T.typing=false;onTyped();return}
+  var ch=T.full.charAt(T.pos-1);
+  T.timer=setTimeout(tick,(ch==='。'||ch==='！'||ch==='？')?170:(ch==='、'||ch==='…'||ch==='―')?90:30);
+}
+function stopTyping(){if(T.timer){clearTimeout(T.timer);T.timer=0}T.typing=false}
+function finishTyping(){stopTyping();$('msgText').textContent=T.full;onTyped()}
+function hasMore(){for(var j=Q.i;j<Q.lines.length;j++)if(String(Q.lines[j][0]).charAt(0)!=='@')return true;return false}
+function onTyped(){
+  if(!Q)return;
+  if(!hasMore()&&Q.imm){drain();finishQ();return}
+  wait='line';$('ind').hidden=false;
+  if(SKIP.on&&!DAY.busy)queueSkip();
+}
+function finishQ(){var d=Q.done;Q=null;wait=null;$('ind').hidden=true;if(d)d()}
+function nextLine(){
+  if(!Q)return;
+  if(drain())return;
+  if(Q.i>=Q.lines.length){finishQ();return}
+  addLine(Q.lines[Q.i++]);
+}
+function play(lines,done,imm){Q={lines:lines,i:0,done:done,imm:!!imm};nextLine()}
+function advance(){
+  if(DAY.busy)return;
+  if(SKIP.on){setSkip(false);return}
+  step();
+}
+function step(){
+  if(T.typing){finishTyping();return}
+  if(wait==='line'&&Q)nextLine();
+}
+function openLog(){
+  var b=$('logBody');clear(b);
+  LOGV.forEach(function(r){var d=el('div','le');d.appendChild(el('span','n',r.n));d.appendChild(el('span','',r.t));b.appendChild(d)});
+  $('logv').hidden=false;$('logv').scrollTop=$('logv').scrollHeight;
+}
+
+function tagOf(o){
+  if(o.tag)return typeof o.tag==='function'?o.tag():o.tag;
+  if(o.pts)return o.type+' '+(o.pts>0?'+':'')+o.pts;
+  return '';
+}
+function showChoice(ch,after){
+  var box=$('choices');clear(box);box.hidden=false;wait='choice';
+  var opts=typeof ch.options==='function'?ch.options():ch.options;
+  var scored=opts.some(function(o){return o.pts!==0});
+  if(scored)opts=shuffle(opts);
+  box.appendChild(el('div','prompt',String(ch.prompt).replace(/（[^）]*）/g,'')));
+  var btns=[];
+  opts.forEach(function(o){
+    var b=el('button','opt');b.type='button';
+    b.appendChild(el('span','',o.t));
+    var tg=tagOf(o);
+    var t=el('span','tag'+(o.pts>0?' pos':(o.pts<0?' neg':'')),tg);b.appendChild(t);
+    b.addEventListener('click',function(){
+      btns.forEach(function(x){x.disabled=true});b.classList.add('chosen');box.hidden=true;wait=null;
+      if(o.run)o.run();
+      if(o.pts){S.gauge=Math.max(MIN-10,Math.min(MAX+10,S.gauge+o.pts));S.log.push({n:SC[S.scene].name,t:o.type+'：'+o.t,p:o.pts,tot:S.gauge})}
+      renderPanel();
+      if(o.res&&o.res.length){play(o.res,function(){after(o)})}else after(o);
+    });
+    box.appendChild(b);btns.push(b);
+  });
+}
+function showCont(nx){pendingNext=nx;goNext()}
+function goNext(){
+  var nx=pendingNext;pendingNext=null;
+  if(typeof nx==='function')nx=nx();
+  if(nx)go(nx);
+}
+
+function go(id){
+  var sc=SC[id];
+  if(sc.dayBreak&&S.scene&&!DAY.busy){dayBreak(sc.dayBreak,function(){enterGo(id)},function(){runStep(sc,0)});return}
+  if(sc.place&&S.scene&&!DAY.busy){dayBreak(0,function(){enterGo(id)},function(){runStep(sc,0)},{place:sc.place});return}
+  enterGo(id);runStep(sc,0);
+}
+function enterGo(id){
+  var sc=SC[id];S.scene=id;saveRead();
+  Q=null;pendingNext=null;
+  stopTyping();wait=null;$('msgText').textContent='';$('msgName').textContent='';$('choices').hidden=true;$('ind').hidden=true;
+  if(sc.t[0]!==null)lastT=sc.t;
+  header(lastT);
+  enterScene(id);
+  if(sc.enter)sc.enter();
+  renderPanel();
+}
+var lastT=[1,'昼'];
+function goTo(nx){if(typeof nx==='function')nx=nx();if(nx)go(nx)}
+function runStep(sc,i){
+  var st=sc.steps[i];
+  if(st.enter)st.enter();
+  var lines=typeof st.lines==='function'?st.lines():st.lines;
+  if(i>0){clear($('choices'))}
+  var imm=false;
+  play(lines,function(){
+    var proceed=function(){
+      if(i+1<sc.steps.length)return runStep(sc,i+1);
+      if(sc.ending)return showEnd(sc.ending);
+      if(sc.next!==undefined)showCont(sc.next);
+    };
+    if(!st.choice)return proceed();
+    showChoice(st.choice,function(o){
+      if(o.next!==undefined){
+        if(o.res&&o.res.length)return showCont(o.next);
+        return goTo(o.next);
+      }
+      proceed();
+    });
+  },imm);
+}
+
+/* エンディング画面 */
+function reached(){try{return JSON.parse(localStorage.getItem('kofuku-endings')||'[]')}catch(e){return[]}}
+function remember(k){try{var r=reached();if(r.indexOf(k)<0){r.push(k);localStorage.setItem('kofuku-endings',JSON.stringify(r))}}catch(e){}}
+function fillSlots(box){
+  clear(box);var got=reached();
+  Object.keys(ENDINGS).forEach(function(x){var on=got.indexOf(x)>=0;box.appendChild(el('span','slot'+(on?' got':''),ENDINGS[x].no+' '+(on?ENDINGS[x].name:'？？？')))});
+}
+function showEnd(k){
+  var e=ENDINGS[k];remember(k);S.ended=k;setSkip(false);saveRead();
+  var v=$('endView');clear(v);
+  $('gameView').hidden=false;
+  var wrap=el('div','');
+  wrap.appendChild(el('h2','','エンディング '+e.no+'　'+e.name));
+  var hi=S.gauge>=cfg.threshold;
+  wrap.appendChild(el('p','cond',(S.vacc?'接種する':'接種しない')+'　／　ゲージ '+(S.gauge>0?'+':'')+S.gauge+'（しきい値 +'+cfg.threshold+'で'+(hi?'言葉を持てた':'届かず')+'）　／　祖父フラグ '+(S.grand?'有':'無')));
+  var slots=el('div','slots');fillSlots(slots);
+  wrap.appendChild(slots);
+  var btns=el('div','btns');
+  var b1=el('button','btn','最初からやり直す');b1.type='button';b1.addEventListener('click',startGame);
+  var b2=el('button','btn','タイトルに戻る');b2.type='button';b2.addEventListener('click',toTitle);
+  btns.appendChild(b2);btns.appendChild(b1);wrap.appendChild(btns);
+  v.appendChild(wrap);v.hidden=false;
+  $('ind').hidden=true;$('choices').hidden=true;wait=null;
+}
+
+function toTitle(){
+  if(DAY.busy)return;
+  setSkip(false);
+  try{if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}
+  var old=AUD.a;AUD.cur=null;AUD.a=null;
+  if(old)bgmFade(old,0,700,function(){try{old.pause()}catch(e){}});
+  $('endView').hidden=true;$('gameView').hidden=true;
+  fillSlots($('titleSlots'));
+  var tv=$('titleView');tv.style.opacity='';tv.style.transition='';tv.hidden=false;
+}
+
+/* パネル */
+function renderPanel(){
+  if(!S)return;
+  var g=S.gauge;
+  var box=$('gaugeBox');clear(box);
+  var big=el('div','big',(g>0?'+':'')+g);box.appendChild(big);
+  var m=el('div','meter');
+  var z=(0-MIN)/(MAX-MIN)*100,pos=(Math.max(MIN,Math.min(MAX,g))-MIN)/(MAX-MIN)*100;
+  var f=el('div','fill '+(g>=0?'pos':'neg'));
+  if(g>=0){f.style.left=z+'%';f.style.width=(pos-z)+'%'}else{f.style.left=pos+'%';f.style.width=(z-pos)+'%'}
+  m.appendChild(f);
+  var mz=el('div','mk zero');mz.style.left=z+'%';m.appendChild(mz);
+  var th=el('div','mk thr');th.style.left=((Math.max(MIN,Math.min(MAX,cfg.threshold))-MIN)/(MAX-MIN)*100)+'%';m.appendChild(th);
+  box.appendChild(m);
+  var sc=el('div','scale');sc.appendChild(el('span','',String(MIN)));sc.appendChild(el('span','','0'));sc.appendChild(el('span','','+'+MAX));box.appendChild(sc);
+
+  var fl=$('flagBox');clear(fl);
+  fl.appendChild(el('span','chip'+(S.grand?' on':''),'祖父フラグ '+(S.grand?'有':'無')));
+  Object.keys(PLACES).forEach(function(k){fl.appendChild(el('span','chip'+(S.visited.indexOf(k)>=0?' on':''),PLACES[k].chip))});
+  if(S.vacc!==null)fl.appendChild(el('span','chip on',S.vacc?'接種する':'接種しない'));
+
+  var lb=$('logBox');clear(lb);
+  if(!S.log.length){lb.appendChild(el('div','empty','まだありません'))}
+  S.log.forEach(function(r){
+    var row=el('div','logline');
+    row.appendChild(el('span','',r.n+'　'+r.t));
+    row.appendChild(el('span','p'+(r.p>0?' pos':(r.p<0?' neg':'')),r.note?'':((r.p>0?'+':'')+r.p)));
+    row.appendChild(el('span','',r.note?'':'計'+r.tot));
+    lb.appendChild(row);
+  });
+}
+
+function startGame(){
+  if(DAY.busy)return;
+  fresh();setSkip(false);lastT=[1,'昼'];LOGV.length=0;DAY.hold=false;DAY.pend=null;$('fade').classList.remove('lab');
+  var tv=$('titleView'),wasTitle=!tv.hidden;
+  DAY.busy=true;
+  function begin(){
+    tv.hidden=true;tv.style.opacity='';tv.style.transition='';
+    $('endView').hidden=true;$('gameView').hidden=false;
+    var f=$('fade');f.style.transition='none';f.classList.add('on');void f.offsetWidth;
+    dayBreak(1,function(){enterGo('arrive')},function(){runStep(SC.arrive,0)},{time:'昼',black:true});
+  }
+  if(wasTitle){tv.style.transition='opacity .7s';tv.style.opacity='0';setTimeout(begin,REDUCE?0:700)}else begin();
+}
+
+/* 入力 */
+fillSlots($('titleSlots'));
+$('startBtn').addEventListener('click',startGame);
+$('screen').addEventListener('click',function(e){
+  if(e.target.closest('button,input,a,.logv,.end'))return;advance();
+});
+$('logBtn').addEventListener('click',openLog);
+$('muteBtn').addEventListener('click',toggleMute);renderMute();
+$('skipBtn').addEventListener('click',function(e){e.stopPropagation();setSkip(!SKIP.on)});
+(function(){
+  var gv=$('gameView'),fb=$('fsBtn');
+  var can=!!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
+  if(!can)return;
+  fb.hidden=false;
+  function cur(){return document.fullscreenElement||document.webkitFullscreenElement}
+  function sync(){fb.textContent=cur()?'全画面を解除':'全画面'}
+  fb.addEventListener('click',function(e){
+    e.stopPropagation();
+    try{
+      if(cur()){(document.exitFullscreen||document.webkitExitFullscreen).call(document)}
+      else{var r=(gv.requestFullscreen||gv.webkitRequestFullscreen).call(gv);if(r&&r.catch)r.catch(function(){fb.hidden=true})}
+    }catch(err){fb.hidden=true}
+  });
+  document.addEventListener('fullscreenchange',sync);document.addEventListener('webkitfullscreenchange',sync);
+  sync();
+})();
+$('logClose').addEventListener('click',function(){$('logv').hidden=true});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){$('logv').hidden=true;return}
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  var t=e.target.tagName;if(t==='BUTTON'||t==='INPUT'||t==='SUMMARY'||t==='A')return;
+  if(!$('gameView').hidden&&$('logv').hidden&&$('endView').hidden){e.preventDefault();advance()}
+});
+$('dbg').addEventListener('change',function(){document.body.classList.toggle('debug',$('dbg').checked)});
+function num(id,min,max,key){
+  $(id).addEventListener('input',function(){
+    var v=parseInt($(id).value,10);if(isNaN(v))return;cfg[key]=Math.max(min,Math.min(max,v));renderPanel();
+  });
+}
+num('thr',MIN,MAX,'threshold');
+$('vol').value=Math.round(AUD.vol*100);
+$('vol').addEventListener('input',function(){
+  AUD.vol=parseInt($('vol').value,10)/100;
+  try{localStorage.setItem('kofuku-vol',String(AUD.vol))}catch(e){}
+  if(AUD.a&&!AUD.muted&&!DAY.busy)try{AUD.a.volume=AUD.vol}catch(e){}
+});
+$('nm').addEventListener('input',function(){cfg.name=$('nm').value||'アルテ'});
+$('gsetBtn').addEventListener('click',function(){
+  if(!S)return;var v=parseInt($('gset').value,10);if(isNaN(v))return;S.gauge=Math.max(MIN,Math.min(MAX,v));renderPanel();
+});
+if(window.innerWidth<832)$('panel').open=false;
+fresh();renderPanel();renderAssets();
+setBg('gate');syncCast();
+})();
+</script>
