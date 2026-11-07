@@ -376,7 +376,7 @@ function drain(){
   while(Q&&Q.i<Q.lines.length&&String(Q.lines[Q.i][0]).charAt(0)==='@'){
     var r=Q.lines[Q.i++];
     if(r[0]==='@bg')setBg(r[1]);
-    else if(r[0]==='@day'){var q=Q;dayBreak(r[1],function(){setBg(r[2])},function(){if(Q===q)nextLine()});return true}
+    else if(r[0]==='@day'){var q=Q;dayBreak(r[1],function(){setBg(r[2]);if(r[1]===4){lastT=[0,'朝'];header(lastT)}},function(){if(Q===q)nextLine()});return true}
     else if(r[0]==='@join'){r.slice(1).forEach(function(k){if(VIS.npcs.indexOf(k)<0)VIS.npcs.push(k)});syncCast()}
     else if(r[0]==='@clear'){VIS.npcs.length=0;VIS.active=null;syncCast()}
     else if(r[0]==='@leave'){var ix=VIS.npcs.indexOf(r[1]);if(ix>=0){VIS.npcs.splice(ix,1);if(VIS.active===r[1])VIS.active=null;syncCast()}}
@@ -525,6 +525,7 @@ function sitLines(extra){
     ['少女','……隣にいるって、言われたの、初めてです。']];
   if(extra){
     L.push(['少女','……決めるのは、私、ですね。']);
+    if(S.grand)L.push(['少女','……おじいちゃんの言葉、もう少し、持っていたいです。']);
     L.push(['n','少女は、少し考えてから、同意書をたたみ直した。']);
   }
   return L;
@@ -728,7 +729,7 @@ var SC={
       ['少女','「嬉しくも、悲しくもない。周りの人たちは、灰色の顔をしている。あの灰色も、感情と呼んでいいのだろうか。」'],
       ['少女','その下に、もう一行あるんです。「答えは、まだ出ない。出ないまま、残しておく」って。'],
       ['少女','祖父は、打った人たちを、責めてはいなかったんです。ただ、ずっと、不思議に思っていました。'],
-      ['少女','十八になるまで、涙も怒りも、捨てずに持っていなさいって。……遺言、です。'],
+      ['少女','十八になるまで、涙も怒りも、捨てずに持っていておくれ。選択は、それからでいい、って。……遺言、です。'],
       ['少女','だから、両親は、私にだけ、接種を待ってくれているんです。'],
       ['少女','でも、持っているのが、苦しくて。']],
      enter:function(){S.grand=true;S.log.push({n:'図書館',t:'祖父フラグ',p:0,tot:S.gauge,note:true})},
@@ -761,7 +762,7 @@ var SC={
       ['旅','……すごいんだね。'],
       ['学芸員','ええ。この国の誇りです。'],
       ['旅','……打たない人も、いるの？'],
-      ['学芸員','この国には、いません。接種のあとは、泣くことも、怒ることも、静かな思い出になります。誰も、困らないんです。'],
+      ['学芸員','今は、ほとんど、いません。接種のあとは、泣くことも、怒ることも、静かな思い出になります。誰も、困らないんです。'],
       ['n','学芸員は、少女のほうを見て、穏やかに微笑んだ。'],
       ['学芸員','あなたも、もうすぐですね。皆さん、楽しみにしていますよ。'],
       ['少女','……はい。'],
@@ -834,7 +835,7 @@ var SC={
     ['猫','間違ってないのに、ね。'],
     ['旅','……あの子の言葉は、どこに置けばいいんだろう。']]}],next:'d3pick'},
 
-  d3pick:pick(3,'午前',[['n','三日目。誕生日まで、あと一日。朝の宿の前で、少女が、また待っていてくれた。空は、昨日と同じように晴れている。'],['少女','今日も、案内します。……あと一か所くらい、行けると思います。'],['n','まだ回っていない場所が、二つ残っている。行けるのは、一つだけ。']],'どこへ行きますか？（少女の案内・午前）','d3bench'),
+  d3pick:pick(3,'午前',[['n','三日目。朝の宿の前で、少女が、また待っていてくれた。空は、昨日と同じように晴れている。'],['少女','今日も、案内します。……あと一か所くらい、行けると思います。']],'どこへ行きますか？（少女の案内・午前）','d3bench'),
 
   d3bench:{t:[3,'夕方'],name:'路地裏のベンチ',steps:[
     {lines:function(){
@@ -890,9 +891,9 @@ var SC={
     ['n','少女は、うつむいたまま言った。'],
     ['少女','……そばに、いてくれますか。どちらを選んでも。']],
     choice:{prompt:'旅人は何と言う？（点数なし。接種の有無が決まる）',options:function(){var L=[
-      O('向き合い','「打つことになっても、その日も隣にいるよ」',0,sitLines(false),{tag:'→ 接種する',run:function(){S.vacc=true},next:function(){return endingId()}}),
-      O('向き合い','「打たなくても、ずっと隣にいるよ」',0,sitLines(false),{tag:'→ 接種しない',run:function(){S.vacc=false},next:function(){return endingId()}}),
-      O('向き合い','「どちらでも、隣にいる。決めるのは、きみだよ」',0,sitLines(true),{tag:function(){return S.grand?'→ 接種しない（祖父フラグ有）':'→ 接種する（祖父フラグ無）'},run:function(){S.vacc=!S.grand},next:function(){return endingId()}})];
+      O('向き合い','「打つことになっても、その日も隣にいるよ」',0,sitLines(false).concat([['少女','……打つなら、私が、決めたことにしたいです。']]),{tag:'→ 接種する',run:function(){S.vacc=true},next:function(){return endingId()}}),
+      O('向き合い','「打たなくても、ずっと隣にいるよ」',0,sitLines(false).concat([['少女','……打たないのも、私が、決めたことにして、いいですか。']]),{tag:'→ 接種しない',run:function(){S.vacc=false},next:function(){return endingId()}}),
+      O('向き合い','「どちらでも、隣にいる。決めるのは、きみだよ」',0,function(){return sitLines(true)},{tag:function(){return S.grand?'→ 接種しない（祖父フラグ有）':'→ 接種する（祖父フラグ無）'},run:function(){S.vacc=!S.grand},next:function(){return endingId()}})];
       if(trueUnlocked())L.push(O('向き合い','「隣にいるよ。……いま、何が引っかかってるの？」',0,sitLines(false).concat(trueNight()),{tag:'→ トゥルー⑤（4ED既読＋ゲージ高）',run:function(){S.vacc=false},next:'e5'}));
       return L}}}]}
 };
@@ -922,7 +923,7 @@ var ENDINGS={
   e2:{no:'②',name:'閉じる',vacc:true,high:true,lines:function(){return[
     ['少女','悔しいです。さみしいです。全部、ちゃんとここにあります。……それでも、打ちます。'],
     ['少女','悲しいまま、動けなくなるのは、嫌なんです。だから、自分で選びます。'],
-    ['少女','おじいちゃんは、私に、考える時間をくれたんだと思います。'],
+    ['少女',S.grand?'おじいちゃんは、私に、考える時間をくれたんだと思います。':'旅人さんは、私に、考える時間をくれたんだと思います。'],
     ['@day',4,'inn_front'],
     ['n','翌朝。少女は、旅人と黒猫の前に立った。服は昨日と同じ。手の中に、同意書はなかった。'],
     ['少女',cfg.name+'です。私の名前。'],
@@ -939,7 +940,7 @@ var ENDINGS={
     ['旅','……痛みは、あの子の言葉なんだね。'],
     ['猫','ちゃんと、届いてたよ。']]}},
   e3:{no:'③',name:'ひとり',vacc:false,high:false,lines:function(){return[
-    ['少女','打ちません。……理由は、うまく言えないけど。まだ、決められないだけかもしれません。'],
+    ['少女','……打たない、つもりです。理由は、うまく言えないけど。まだ、決められないだけかもしれません。'],
     ['@day',4,'street'],
     ['@leave','girl'],
     ['n','翌朝も、街はやさしかった。「決まったら、いつでも言ってね」と、誰もが同じ調子で声をかけていく。責める人は、ひとりもいなかった。'],
@@ -984,7 +985,7 @@ var ENDINGS={
     ['n','翌朝。少女は、国の門の前に立っていた。旅人と黒猫を、見送るために。'],
     ['少女','決めました。……今は、打ちません。'],
     ['旅','そっか。'],
-    ['少女','おじいちゃんが、そうだったからじゃないです。']];
+    ['少女','誰かが、そうだったからじゃないです。']];
     if(S.grand)L.push(['少女','おじいちゃんとの約束は、今日までだから。ここからは、私の約束です。']);
     return L.concat([
     ['少女','もっと、いろんなものを見て、知りたい。……それから、自分で選びたいんです。私にとって、何が大切なのか。'],
@@ -1010,7 +1011,7 @@ SC.d2inn.dayBreak=2;SC.d3pick.dayBreak=3;
 SC.d2home.place='少女の家へ';SC.d2night.place='宿へ戻る';SC.d3night.place='宿へ戻る';
 Object.keys(ENDINGS).forEach(function(k){
   var e=ENDINGS[k];
-  SC[k]={t:END_T,name:'エンディング'+e.no,ending:k,steps:[{lines:e.lines}]};
+  SC[k]={t:(k==='e5'?END_T:[3,'夜']),name:'エンディング'+e.no,ending:k,steps:[{lines:e.lines}]};
 });
 SC.e5.dayBreak=4;
 SC.e4.alias={mother:'mother_e4',father:'father_e4'};
@@ -1139,7 +1140,7 @@ function showChoice(ch,after){
       if(o.run)o.run();
       if(o.pts){S.gauge=Math.max(MIN-10,Math.min(MAX+10,S.gauge+o.pts));S.log.push({n:SC[S.scene].name,t:o.type+'：'+o.t,p:o.pts,tot:S.gauge})}
       renderPanel();
-      if(o.res&&o.res.length){play(o.res,function(){after(o)})}else after(o);
+      var rs=typeof o.res==='function'?o.res():o.res;if(rs&&rs.length){play(rs,function(){after(o)})}else after(o);
     });
     box.appendChild(b);btns.push(b);
   });
@@ -1184,7 +1185,7 @@ function runStep(sc,i){
     if(!st.choice)return proceed();
     showChoice(st.choice,function(o){
       if(o.next!==undefined){
-        if(o.res&&o.res.length)return showCont(o.next);
+        if(typeof o.res==='function'||(o.res&&o.res.length))return showCont(o.next);
         return goTo(o.next);
       }
       proceed();
